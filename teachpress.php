@@ -644,8 +644,8 @@ if ( TEACHPRESS_ERROR_REPORTING === true ) {
     register_activation_hook( __FILE__, 'tp_activation_error_reporting' );
 }
 
-// Register course module
-if ( TEACHPRESS_COURSE_MODULE === true ) {
+// Register course module, set true to activate
+if ( TEACHPRESS_COURSE_MODULE === false) {
     add_action('admin_menu', 'tp_add_menu');
     add_shortcode('tpdate', 'tp_date_shortcode');  // Deprecated
     add_shortcode('tpcourseinfo', 'tp_courseinfo_shortcode');

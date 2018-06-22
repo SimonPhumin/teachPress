@@ -16,9 +16,5 @@
   ],
   "keywords": [
     "teachPress", "publications", "wordpress", "composer", "wp"
-  ],
-  "support": {
-    "issues": "https://github.com/roots/bedrock/issues",
-    "forum": "https://discourse.roots.io/category/bedrock"
-  }
+  ]
 }

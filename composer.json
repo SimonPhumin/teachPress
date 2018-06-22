@@ -1,5 +1,5 @@
 {
-  "name": "teachPress",
+  "name": "simonphumin/teachPress",
   "type": "wordpress-plugin",
   "license": "MIT",
   "description": "Modified and forked teachPress Wordpress Plugin to use APA-Style and Bootstrap 4",
@@ -16,5 +16,8 @@
   ],
   "keywords": [
     "teachPress", "publications", "wordpress", "composer", "wp"
-  ]
+  ],
+"extra": {
+  "installer-name": "teachPress"
+}
 }

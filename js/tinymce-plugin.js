@@ -556,7 +556,60 @@
                                 });
                             }
                         },
+                        // ------------------------------------------------------------------HCI-GROUP THB Custom Code---------------------------------------------
+                        // [tplist_hci]
                         
+                      {
+                            text: 'Publication list (HCI-Group) [tplist_hci]',
+                            onclick: function() {
+                                editor.windowManager.open( {
+                                    title: 'Insert publication list (HCI-Group) [tplist_hci]',
+                                    bodyType: 'tabpanel',
+                                    body: [
+                                        {
+                                            title: 'Filter',
+                                            type: 'form',
+                                            name: 'tp_filterform',
+                                            items: [
+                                                {
+                                                    type: 'textbox',
+                                                    name: 'tp_entries_per_page',
+                                                    label: 'Entries per page',
+                                                    value: '50'
+                                                }
+                                            ]  
+                                        },
+                                        {
+                                            title: 'Design',
+                                            type: 'form',
+                                            name: 'tp_designform',
+                                            items: [
+                                                {
+                                                    type: 'listbox',
+                                                    name: 'tp_template',
+                                                    label: 'Template',
+                                                    'values': teachpress_pub_templates  //  is written by tp_write_data_for_tinymce()
+                                                }
+                                            ]
+                                        },
+                                    ],
+                                    onsubmit: function( e ) {
+                                        var filterData = this.find('[name=tp_filterform]')[0].toJSON();
+                                        var designData = this.find('[name=tp_designform]')[0].toJSON();
+                                        var template = designData.tp_template;
+                                        var entries_per_page = e.data.tp_entries_per_page;
+                                        
+                                        template = 'template="' + template + '"';
+                                        entries_per_page = (entries_per_page === '50') ? '' : 'entries_per_page="' + entries_per_page + '"';
+                                        
+                                        editor.insertContent( '[tplist_hci ' + template + ' ' + entries_per_page + ']');
+                                    }
+                                });
+                            }
+                        },
+                        // ------------------------------------------------------------------HCI-GROUP THB Custom Code---------------------------------------------
+
+
                         // [tpcloud]
                         
                         {

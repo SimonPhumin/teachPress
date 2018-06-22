@@ -171,7 +171,7 @@ class tp_import_publication_page {
                     <?php if ( get_tp_option('import_overwrite') === '1' ) { ?>
                     <div class="inside">
                         <p><strong><label for="overwrite"><?php _e('Overwrite Publications','teachpress'); ?></label></strong></p>
-                        <?php echo tp_admin::get_checkbox('overwrite', __('Overwrite existing publications with a similar BibTeX key','teachpress'), ''); ?>
+                        <?php echo tp_admin::get_checkbox('overwrite', __('Overwrite existing publications with a similar BibTeX key','teachpress'), '1'); ?>
                     </div>
                     <?php } ?>
                     <div id="major-publishing-actions" style="text-align: center;">

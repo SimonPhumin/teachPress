@@ -661,6 +661,8 @@ if ( TEACHPRESS_PUBLICATION_MODULE === true ) {
     add_action('widgets_init', function(){ register_widget( 'tp_books_widget' ); });
     add_shortcode('tpcloud', 'tp_cloud_shortcode');
     add_shortcode('tplist', 'tp_list_shortcode');
+    // new tplist_hci shortcode
+    add_shortcode('tplist_hci', 'tplist_hci_shortcode');
     add_shortcode('tpsingle', 'tp_single_shortcode');
     add_shortcode('tpbibtex', 'tp_bibtex_shortcode');
     add_shortcode('tpabstract', 'tp_abstract_shortcode');

@@ -430,6 +430,34 @@ class tp_bibtex {
         }
         return $all_authors;
     }
+
+    ////////////////////////////////////////////// Custom Code to make Editornames different than Authornames.
+    
+    public static function parse_editor ($input, $separator, $mode = '') {
+        global $PARSEEDITORS;
+        $creator = new PARSEEDITORS();
+        //global $PARSECREATORS;
+        //$creator = new PARSECREATORS();
+        $creatorArray = $creator->parse($input);
+        $all_editors = '';
+        $max = count($creatorArray);
+        for ( $i = 0; $i < $max; $i++ ) {
+            $one_author = '';
+            if ($creatorArray[$i][3] != '') { $one_author = trim($creatorArray[$i][3]);}
+            if ($creatorArray[$i][2] != '') { $one_author .= ' ' .trim($creatorArray[$i][2]) . '';}
+            if ($creatorArray[$i][0] != '') { $one_author .= ' ' .trim($creatorArray[$i][0]);}
+            if ( $mode == 'initials' && $creatorArray[$i][1] != '' ) { 
+                $one_author .= ' ' .trim($creatorArray[$i][1]);
+            }
+            $all_editors .= stripslashes($one_author);
+            if ( $i < count($creatorArray) -1 ) {
+                $all_editors .= $separator . ' ';
+            }
+        }
+        return $all_editors;
+    }
+    
+    ////////////////////////////////////////////////////////////////////////////////////////////// End Custom Code.
     
     /**
      * This is the default parsing function for author names
@@ -448,7 +476,8 @@ class tp_bibtex {
      */
     public static function parse_author_default ($input, $separator = ';', $mode = 'initials') {
         global $PARSECREATORS;
-        $creator = new PARSECREATORS();
+        //call of new class PARSECREATORS1 for a different view of all authors (frontend)
+        $creator = new PARSECREATORS1();
         $creatorArray = $creator->parse($input);
         $all_authors = '';
         $max = count($creatorArray);

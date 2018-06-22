@@ -19,7 +19,7 @@ implements tp_publication_template {
 			'description' => 'Show Publications in APA-Style.',
 			'author' => 'Joel Rixen',
 			'version' => '1.0',
-			'button_separator' => ' | ',
+			'button_separator' => ' ',
 			'citation_style' => 'APA'
 		);
 	}
@@ -33,7 +33,7 @@ implements tp_publication_template {
 	public
 
 
-/*function get_body( $content, $args = array() ) {
+	/*function get_body( $content, $args = array() ) {
 		return '<table class="teachpress_publication_list"><form method="post"><select name="show_all" onchange="this.form.submit()">
 		<option value="0">No. of entries per page</option>
 		<option value="1">Show 10 entries per page</option>
@@ -106,7 +106,7 @@ implements tp_publication_template {
 		//$s .= '' . $interface->get_editor() . ' (Eds.),';
 		
 
-		//Typen: Journal Article, Conference, Book, Inproceedings, Technical Report, Incollection, Booklet, Masters Thesis, PhD Thesis
+		//Types: Journal Article, Conference, Book, Inproceedings, Technical Report, Incollection, Booklet, Masters Thesis, PhD Thesis
 		
 		if ( $interface->get_type2() == 'article' ) {
 			
@@ -217,13 +217,14 @@ implements tp_publication_template {
 
 			$s .= '<p class="tp_pub_title"><i>' . $interface->get_title() . '.</i></p>';
 			$s .= '<p class="tp_pub_additional">';
+
+			if ( $interface->get_address() != "" ) {
+				$s .= '' . $interface->get_address() . ': ';
+			}
 			
 			if ( $interface->get_school() != "" ) {
-				$s .= '' . $interface->get_school() . ', ';
+				$s .= '' . $interface->get_school() . '.';
 			}	
-			if ( $interface->get_address() != "" ) {
-				$s .= '' . $interface->get_address() . '.';
-			}
 			
 			$s .= '</p>';
 			
@@ -256,9 +257,10 @@ implements tp_publication_template {
 			$s .= '<p class="tp_pub_title"><i>' . $interface->get_title() . '.</i></p>';
 			
 		}
-		
-			//$s .= '<p class="tp_pub_additional">' . $interface->get_meta() . '</p>';
-		$s .= '<p class="tp_pub_tags">' . $interface->get_tag_line() . '</p>';
+
+		$s .= '<p class="tp_pub_tags">' . $interface->get_tag_line();
+		$s .= $interface->get_type();
+		$s .= '</p>';
 		$s .= $interface->get_infocontainer();
 		$s .= $interface->get_images( 'bottom' );
 		$s .= '</td>';

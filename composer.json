@@ -2,7 +2,7 @@
   "name": "teachPress",
   "type": "vcs",
   "license": "MIT",
-  "description": "Modified and forked teachPress Wordpress Plugin to use APA-Style",
+  "description": "Modified and forked teachPress Wordpress Plugin to use APA-Style and Bootstrap 4",
   "homepage": "https://github.com/SimonPhumin/teachPress",
   "authors": [
     {

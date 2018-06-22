@@ -1,0 +1,24 @@
+{
+  "name": "teachPress",
+  "type": "vcs",
+  "license": "MIT",
+  "description": "Modified and forked teachPress Wordpress Plugin to use APA-Style",
+  "homepage": "https://github.com/SimonPhumin/teachPress",
+  "authors": [
+    {
+      "name": "Michael Winkler",
+      "homepage": "https://github.com/winkm89"
+    },
+    {
+      "name": "Simon Phumin Schweikert",
+      "homepage": "https://github.com/simonphumin"
+    }
+  ],
+  "keywords": [
+    "teachPress", "publications", "wordpress", "composer", "wp"
+  ],
+  "support": {
+    "issues": "https://github.com/roots/bedrock/issues",
+    "forum": "https://discourse.roots.io/category/bedrock"
+  }
+}

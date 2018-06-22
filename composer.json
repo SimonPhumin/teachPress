@@ -17,7 +17,7 @@
   "keywords": [
     "teachPress", "publications", "wordpress", "composer", "wp"
   ],
-"extra": {
-  "installer-name": "teachPress"
-}
+  "require": {
+        "composer/installers": "~1.0"
+    }
 }

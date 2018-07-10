@@ -1176,26 +1176,6 @@ function tp_links_shortcode ($atts) {
 function tplist_hci_shortcode($atts) {
 
 
-           // no. of entries
-
-        $option_selected_ten =  '<option value="2">10 Entries per Page</option>';
-        $option_selected_all =  '<option selected="selected" value="1">All Entries</option>';
-
-        if(isset($_POST["show_all"]) == "2"){
-            $option_selected_all =  '<option value="1">All Entries</option>';
-            $option_selected_ten =  '<option selected="selected" value="2">10 Entries per Page</option>';
-            $atts['entries_per_page'] = 10;
-            
-        }
-        else{
-            $option_selected_ten =  '<option value="2">10 Entries per Page</option>';
-            $option_selected_all =  '<option selected="selected" value="1">All Entries</option>';
-            $atts['entries_per_page'] = 10000;
-            
-        }
-
-
-
     $atts = shortcode_atts(array(
         'user' => '',
         'type' => '',
@@ -1223,10 +1203,10 @@ function tplist_hci_shortcode($atts) {
         'title_ref' => 'links',
         'link_style' => 'inline',
         'date_format' => 'd.m.Y',
-        'pagination' => 1,
+        'pagination' => 0,
         'entries_per_page' => 10000,
         'sort_list' => '',
-        'show_tags_as' => 'cloud',
+        'show_tags_as' => 'pulldown',
         'show_author_filter' => 1,
         'show_type_filter' => 1,
         'show_bibtex' => 1,
@@ -1277,14 +1257,12 @@ function tplist_hci_shortcode($atts) {
         'tag' => ( isset ($_GET['tgid']) && $_GET['tgid'] != '' ) ? intval($_GET['tgid']) : '',
         'year' => ( isset ($_GET['yr']) && $_GET['yr'] != '' ) ? intval($_GET['yr']) : '',
         'type' => isset ($_GET['type']) ? htmlspecialchars( $_GET['type'] ) : '',
-       'author' => ( isset ($_GET['auth']) && $_GET['auth'] != '' ) ? intval($_GET['auth']) : '',
         'user' => ( isset ($_GET['usr']) && $_GET['usr'] != '' ) ? intval($_GET['usr']) : '',
     );
     
     $sql_parameter = array (
         'user' => htmlspecialchars($atts['user']),
         'type' => htmlspecialchars($atts['type']),
-        'author' => htmlspecialchars($atts['author']),
         'year' => htmlspecialchars($atts['year']),
         'exclude' => htmlspecialchars($atts['exclude']),
         'exclude_tags' => htmlspecialchars($atts['exclude_tags']),
@@ -1316,6 +1294,23 @@ function tplist_hci_shortcode($atts) {
     /**********/
     $filter = '';
 
+        // no. of entries
+
+        $option_selected_ten =  '<option value="2">10 Entries per Page</option>';
+        $option_selected_all =  '<option selected="selected" value="1">All Entries</option>';
+
+        if(isset($_POST["show_all"]) == "2"){
+            $option_selected_all =  '<option value="1">All Entries</option>';
+            $option_selected_ten =  '<option selected="selected" value="2">10 Entries per Page</option>';
+            $atts['entries_per_page'] = 10;
+            
+        }
+        else{
+            $option_selected_ten =  '<option value="2">10 Entries per Page</option>';
+            $option_selected_all =  '<option selected="selected" value="1">All Entries</option>';
+            $atts['entries_per_page'] = 10000;
+            
+        }
 
         // Filter no. of entries
         if ( $atts['entries_per_page'] == '10000' || $atts['entries_per_page'] == '10' || strpos($atts['entries_per_page'], ',') !== false ) {
@@ -1336,8 +1331,13 @@ function tplist_hci_shortcode($atts) {
         $filter .= tp_shortcodes::generate_filter_hci($filter_parameter, $sql_parameter, $settings, 'type');
     }
 
+
+  
+
+
+
     // Endformat
-    if ($filter_parameter['year'] == '' && ( $filter_parameter['type'] == '' || $filter_parameter['type'] == $atts['type'] ) && ( $filter_parameter['user'] == '' || $filter_parameter['user'] == $atts['user'] ) && $filter_parameter['author'] == '' && $filter_parameter['tag'] == '') {
+    if ($filter_parameter['year'] == '' && ( $filter_parameter['type'] == '' || $filter_parameter['type'] == $atts['type'] ) && ( $filter_parameter['user'] == '' || $filter_parameter['user'] == $atts['user'] ) && ( $filter_parameter['tags'] == '' || $filter_parameter['user'] == $atts['user'] ) ) {
         $showall = '';
     }
     else {
@@ -1377,6 +1377,9 @@ function tplist_hci_shortcode($atts) {
         'exclude' => $sql_parameter['exclude'],
         'exclude_tags' => $sql_parameter['exclude_tags'],
         'exclude_types' => $sql_parameter['exclude_types'],
+            /************************/
+            /* Change this limit to alter no. of elements in the frontend */
+            /************************/
         'limit' => $pagination_limits['limit'],
         'output_type' => ARRAY_A);
 
@@ -1397,7 +1400,7 @@ function tplist_hci_shortcode($atts) {
     // Load template
     $template = tp_load_template($settings['template']);
     if ( $template === false ) {
-        $template = tp_load_template('tp_template_orig');
+        $template = tp_load_template('tp_template_0apa');
     }
     
     // Create array of publications
@@ -1447,9 +1450,9 @@ function tplist_hci_shortcode($atts) {
                                'sort_list' => $settings['sort_list'] ) );
         $part2 .= $menu;
     }
-    // If there are no publications founded
+    // If there are no publications
     else {
-        $part2 = '<div class="teachpress_list"><p class="teachpress_mistake">' . __('Sorry, no publications matched your criteria.','teachpress') . '</p></div>';
+        $part2 = '<div class="teachpress_list"><p class="teachpress_mistake">' . __('No publications matched your criteria.','teachpress') . '</p></div>';
     }
     
     // Return

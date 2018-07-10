@@ -611,15 +611,17 @@
                                     onsubmit: function( e ) {
                                         var filterData = this.find('[name=tp_filterform]')[0].toJSON();
                                         var designData = this.find('[name=tp_designform]')[0].toJSON();
+                                        var user = filterData.tp_user;
+                                        var tag = filterData.tp_filter_tag;  
+                                        var type = filterData.tp_filter_type;
                                         var template = designData.tp_template;
-                                        var entries_per_page = e.data.tp_entries_per_page;
                                         
                                         user = (user === '') ? '' : 'user="' + user + '"';
                                         type = (type === '0') ? '' : 'type="' + type + '"';
                                         tag = (tag === null) ? '' : 'tag="' + tag + '"';
                                         template = 'template="' + template + '"';
                                         
-                                        editor.insertContent( '[tplist_hci ' + template + ' ' + entries_per_page + ']');
+                                        editor.insertContent( '[tplist_hci ' + user + ' ' + tag + ' ' + type + ' ' + template + ']');
                                     }
                                 });
                             }

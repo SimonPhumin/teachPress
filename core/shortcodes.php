@@ -1245,13 +1245,13 @@ function tplist_hci_shortcode($atts) {
         'show_altmetric_donut' => ($atts['show_altmetric_donut'] == '1') ? true : false
     );
 
-    /*$cloud_settings = array (
+    $cloud_settings = array (
         'show_tags_as' => htmlspecialchars($atts['show_tags_as']),
         'tag_limit' => intval($atts['tag_limit']),
         'hide_tags' => htmlspecialchars($atts['hide_tags']),
         'maxsize' => intval($atts['maxsize']),
         'minsize' => intval($atts['minsize'])
-    );*/
+    );
     
     $filter_parameter = array(
         'tag' => ( isset ($_GET['tgid']) && $_GET['tgid'] != '' ) ? intval($_GET['tgid']) : '',
@@ -1314,7 +1314,7 @@ function tplist_hci_shortcode($atts) {
 
         // Filter no. of entries
         if ( $atts['entries_per_page'] == '10000' || $atts['entries_per_page'] == '10' || strpos($atts['entries_per_page'], ',') !== false ) {
-        $filter .= '<form method="post"><select name="show_all" onchange="this.form.submit()">';
+        $filter .= '<form method="GET"><select name="show_all" onchange="this.form.submit()">';
         $filter .=  $option_selected_all;
         $filter .=  $option_selected_ten;
         $filter .= '</select></form>';
@@ -1337,7 +1337,7 @@ function tplist_hci_shortcode($atts) {
 
 
     // Endformat
-    if ($filter_parameter['year'] == '' && ( $filter_parameter['type'] == '' || $filter_parameter['type'] == $atts['type'] ) && ( $filter_parameter['user'] == '' || $filter_parameter['user'] == $atts['user'] ) && ( $filter_parameter['tags'] == '' || $filter_parameter['user'] == $atts['user'] ) ) {
+    if ($filter_parameter['year'] == '' && ( $filter_parameter['type'] == '' || $filter_parameter['type'] == $atts['type'] ) && ( $filter_parameter['user'] == '' || $filter_parameter['user'] == $atts['user'] ) ) {
         $showall = '';
     }
     else {
@@ -1372,7 +1372,6 @@ function tplist_hci_shortcode($atts) {
         'year' => $filter_parameter['year'], 
         'type' => $filter_parameter['type'], 
         'user' => $filter_parameter['user'], 
-        'author_id' => $filter_parameter['author'],
         'order' => $sql_parameter['order'], 
         'exclude' => $sql_parameter['exclude'],
         'exclude_tags' => $sql_parameter['exclude_tags'],

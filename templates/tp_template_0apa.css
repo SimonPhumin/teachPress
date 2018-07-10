@@ -6,7 +6,7 @@
 
 
 
-td.tp_pub_info {border-bottom:1px solid silver; vertical-align:top; padding: 10px 0;}
+article.tp_pub_info {border-bottom:1px solid silver; vertical-align:top; padding: 10px 0;}
 .tp_pub_author, #content p.tp_pub_author {font-size:small; margin-bottom:1px; margin-top:1px;}
 
 .tp_pub_title, a.tp_title_link, #content p.tp_pub_title {font-size:small; font-weight:bold; margin-top:1px; margin-bottom:1px;}
@@ -64,6 +64,9 @@ font-weight: normal !important;
 }
 
 .tp_pub_title{
+	font-style: italic;
+	letter-spacing: 0;
+	font-weight: normal;
 color:#000;
 }
 

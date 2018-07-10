@@ -15,9 +15,9 @@ implements tp_publication_template {
 	public
 
 	function get_settings() {
-		return array( 'name' => 'teachPress 2016',
+		return array( 'name' => 'teachPress APA 2018',
 			'description' => 'Show Publications in APA-Style.',
-			'author' => 'Joel Rixen',
+			'author' => 'Joel Rixen / Simon Schweikert',
 			'version' => '1.0',
 			'button_separator' => ' ',
 			'citation_style' => 'APA'

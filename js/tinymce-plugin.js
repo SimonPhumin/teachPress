@@ -572,11 +572,26 @@
                                             name: 'tp_filterform',
                                             items: [
                                                 {
-                                                    type: 'textbox',
-                                                    name: 'tp_entries_per_page',
-                                                    label: 'Entries per page',
-                                                    value: '50'
+                                                    type: 'listbox',
+                                                    name: 'tp_user',
+                                                    label: 'Select user',
+                                                    'values': teachpress_pub_user //  is written by tp_write_data_for_tinymce()
+                                                },
+                                                {
+                                                    type: 'listbox',
+                                                    name: 'tp_filter_type',
+                                                    label: 'Only entries with type',
+                                                    value: null,
+                                                    values: teachpress_pub_types
+                                                },
+                                                {
+                                                    type: 'listbox',
+                                                    name: 'tp_filter_tag',
+                                                    label: 'Only entries with tag',
+                                                    value: null,
+                                                    values: teachpress_pub_tags
                                                 }
+                                                
                                             ]  
                                         },
                                         {
@@ -599,8 +614,10 @@
                                         var template = designData.tp_template;
                                         var entries_per_page = e.data.tp_entries_per_page;
                                         
+                                        user = (user === '') ? '' : 'user="' + user + '"';
+                                        type = (type === '0') ? '' : 'type="' + type + '"';
+                                        tag = (tag === null) ? '' : 'tag="' + tag + '"';
                                         template = 'template="' + template + '"';
-                                        entries_per_page = (entries_per_page === '50') ? '' : 'entries_per_page="' + entries_per_page + '"';
                                         
                                         editor.insertContent( '[tplist_hci ' + template + ' ' + entries_per_page + ']');
                                     }

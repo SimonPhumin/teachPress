@@ -53,9 +53,7 @@ implements tp_publication_template {
 	public
 
 	function get_headline( $content, $args = array() ) {
-		return '<div class="col-12 ' . $args[ 'colspan' ] . '>
-                        <h2 class="tp_h3" id="tp_h3_' . esc_attr( $content ) . '">' . $content . '</h2>
-                </div>';
+		return '<div class="tp_headline_2 col-12 pl-0 pr-0"><h2 class="tp_h2" id="tp_h2_' . esc_attr( $content ) . '">' . $content . '</h2></div>';
 	}
 
 	/**
@@ -67,9 +65,7 @@ implements tp_publication_template {
 	public
 
 	function get_headline_sl( $content, $args = array() ) {
-		return '<div class="col-12 ' . $args[ 'colspan' ] . '>
-                        <h3 class="tp_h4" id="tp_h4_' . esc_attr( $content ) . '">' . $content . '</h3>
-                </div>';
+		return '<div class="tp_headline_3 col-12 pl-0 pr-0"><h3 class="tp_h3" id="tp_h3_' . esc_attr( $content ) . '">' . $content . '</h3></div>';
 	}
 
 	/**
@@ -93,178 +89,337 @@ implements tp_publication_template {
 	public
 
 	function get_entry( $interface ) {
-		$s = '<article class="col-12 tp_publication">';
-		$s .= '<div class="row">';
-		$s .= '<div class="tp_pub_info col-12 col-md-10 col-lg-10 col-xl-10">';
-		$s .= '<p class="tp_pub_author">' . $interface->get_author() . ' (' . $interface->get_year() . ').</p>';		
+		$pub_content = '<article class="col-12 pl-0 pr-0 tp_publication">';
+		$pub_content .= '<div class="row">';
+		$pub_content .= '<div class="tp_pub_info col-12">';
+		$pub_content .= '<p class="tp_pub_author">' . $interface->get_author() . ' (' . $interface->get_year() . ').</p>';
 
-		
 		// Journal Article
 		if ( $interface->get_type2() == 'article' ) {
 			
-			$s .= '<h4 class="tp_pub_title"><em>' . $interface->get_title() . '.</em></h4>';
-			$s .= '<p class="tp_pub_additional">';
+			$pub_content .= '<h4 class="tp_pub_title">' . $interface->get_title() . '.</h4>';
+			$pub_content .= '<p class="tp_pub_additional">';
 			
 			if ( $interface->get_journal() != "" ) {
-				$s .= '' . $interface->get_journal() . ', ';
+				$pub_content .= '' . $interface->get_journal() . ', ';
 			}
 			if ( $interface->get_volume() != "" ) {
 				if ( $interface->get_issueno() != "" ) {
-					$s .= $interface->get_volume() . ' (' . $interface->get_issueno() . ').';
+					$pub_content .= $interface->get_volume() . ' (' . $interface->get_issueno() . ').';
 				} else {
-					$s .= $interface->get_volume() . '.';
+					$pub_content .= $interface->get_volume() . '.';
 				}
 			}
 			if ( $interface->get_pages() != "" ) {
-				$s .= $interface->get_pages() . '. ';
+				$pub_content .= $interface->get_pages() . '. ';
 			}
 			
-			$s .= '</p>';
+			$pub_content .= '</p>';
 		
 		// Conference	
 		} elseif ( $interface->get_type2() == 'conference' ) {
 
-			$s .= '<h4 class="tp_pub_title">' . $interface->get_title() . '.</h4>';
-			$s .= '<p class="tp_pub_additional">';
+			$pub_content .= '<h4 class="tp_pub_title">' . $interface->get_title() . '.</h4>';
+			$pub_content .= '<p class="tp_pub_additional">';
 
 			if ( $interface->get_booktitle() != "" ) {
 				if ( $interface->get_editor() != "" && $interface->get_editor() != " , ." ) {
-					$s .= 'In ' . $interface->get_editor() . ' (Eds.), ' . $interface->get_booktitle() . '.';
+					$pub_content .= 'In ' . $interface->get_editor() . ' (Eds.), ' . $interface->get_booktitle() . '.';
 				} else {
-					$s .= 'In ' . $interface->get_booktitle() . '.';
+					$pub_content .= 'In ' . $interface->get_booktitle() . '.';
 				}
 			}
 			if ( $interface->get_address() != "" ) {
-				$s .= $interface->get_address() . ': ';
+				$pub_content .= $interface->get_address() . ': ';
 			}
 			if ( $interface->get_publisher() != "" ) {
-				$s .= $interface->get_publisher() . '.';
+				$pub_content .= $interface->get_publisher() . '.';
 			}
 			
-			$s .= '</p>';
+			$pub_content .= '</p>';
 		
 		// Book	
 		} elseif ( $interface->get_type2() == 'book' ) {
 
-			$s .= '<h4 class="tp_pub_title"><i>' . $interface->get_title() . '.</i></h4>';
-			$s .= '<p class="tp_pub_additional">';
+			$pub_content .= '<h4 class="tp_pub_title">' . $interface->get_title() . '.</h4>';
+			$pub_content .= '<p class="tp_pub_additional">';
 			
 			if ( $interface->get_address() != "" ) {
-				$s .= '' . $interface->get_address() . ': ';
+				$pub_content .= '' . $interface->get_address() . ': ';
 			}
 			if ( $interface->get_publisher() != "" ) {
-				$s .= $interface->get_publisher() . '.';
+				$pub_content .= $interface->get_publisher() . '.';
 			}
 			
-			$s .= '</p>';
+			$pub_content .= '</p>';
 		
 		// Inproceedings	
 		} elseif ( $interface->get_type2() == 'inproceedings' ) {
 
-			$s .= '<h4 class="tp_pub_title">' . $interface->get_title() . '.</h4>';
-			$s .= '<p class="tp_pub_additional">';
+			$pub_content .= '<h4 class="tp_pub_title">' . $interface->get_title() . '.</h4>';
+			$pub_content .= '<p class="tp_pub_additional">';
 
 			if ( $interface->get_booktitle() != "" ) {
 				if ( $interface->get_editor() != "" && $interface->get_editor() != " , ." ) {
-					$s .= 'In ' . $interface->get_editor() . ' (Eds.), ' . $interface->get_booktitle() . '.';
+					$pub_content .= 'In ' . $interface->get_editor() . ' (Eds.), ' . $interface->get_booktitle() . '.';
 				} else {
-					$s .= 'In ' . $interface->get_booktitle() . '.';
+					$pub_content .= 'In ' . $interface->get_booktitle() . '.';
 				}
 			}
 			if ( $interface->get_address() != "" ) {
-				$s .= $interface->get_address() . ': ';
+				$pub_content .= $interface->get_address() . ': ';
 			}
 			if ( $interface->get_publisher() != "" ) {
-				$s .= $interface->get_publisher() . ', ';
+				$pub_content .= $interface->get_publisher() . ', ';
 			}
 			if ( $interface->get_pages() != "" ) {
-				$s .= $interface->get_pages() . '.';
+				$pub_content .= $interface->get_pages() . '.';
 			}
 			
-			$s .= '</p>';
+			$pub_content .= '</p>';
 		
 		// Technical report	
 		} elseif ( $interface->get_type2() == 'techreport' ) {
 
-			$s .= '<h4 class="tp_pub_title"><i>' . $interface->get_title() . '.</i></h4>';
-			$s .= '<p class="tp_pub_additional">';
+			$pub_content .= '<h4 class="tp_pub_title">' . $interface->get_title() . '.</h4>';
+			$pub_content .= '<p class="tp_pub_additional">';
 			
 			if ( $interface->get_address() != "" ) {
-				$s .= '' . $interface->get_address() . ': ';
+				$pub_content .= '' . $interface->get_address() . ': ';
 			}
 			if ( $interface->get_institution() != "" ) {
-				$s .= $interface->get_institution() . '.';
+				$pub_content .= $interface->get_institution() . '.';
 			}
 			
-			$s .= '</p>';
+			$pub_content .= '</p>';
 		
 		// Booklet	
 		} elseif ( $interface->get_type2() == 'booklet' ) {
 
-			$s .= '<h4 class="tp_pub_title"><i>' . $interface->get_title() . '.</i></h4>';
-			$s .= '<p class="tp_pub_additional">';
+			$pub_content .= '<h4 class="tp_pub_title">' . $interface->get_title() . '.</h4>';
+			$pub_content .= '<p class="tp_pub_additional">';
 			
 			if ( $interface->get_address() != "" ) {
-				$s .= '' . $interface->get_address() . '.';
+				$pub_content .= '' . $interface->get_address() . '.';
 			}	
 			
-			$s .= '</p>';
+			$pub_content .= '</p>';
 		
 		// Masters thesis
 		} elseif ( $interface->get_type2() == 'mastersthesis' ||  $interface->get_type2() == 'phdthesis') {
 
-			$s .= '<h4 class="tp_pub_title"><i>' . $interface->get_title() . '.</i></h4>';
-			$s .= '<p class="tp_pub_additional">';
+			$pub_content .= '<h4 class="tp_pub_title">' . $interface->get_title() . '.</h4>';
+			$pub_content .= '<p class="tp_pub_additional"><em>';
 
 			if ( $interface->get_address() != "" ) {
-				$s .= '' . $interface->get_address() . ': ';
+				$pub_content .= '' . $interface->get_address() . ': ';
 			}
 			
 			if ( $interface->get_school() != "" ) {
-				$s .= '' . $interface->get_school() . '.';
+				$pub_content .= '' . $interface->get_school() . '.';
 			}	
 			
-			$s .= '</p>';
+			$pub_content .= '</em></p>';
 		
 		// Incollection	
 		} elseif ( $interface->get_type2() == 'incollection' ) {
 
-			$s .= '<h4 class="tp_pub_title">' . $interface->get_title() . '.</h4>';
-			$s .= '<p class="tp_pub_additional">';
+			$pub_content .= '<h4 class="tp_pub_title">' . $interface->get_title() . '.</h4>';
+			$pub_content .= '<p class="tp_pub_additional">';
 
 			if ( $interface->get_booktitle() != "" ) {
 				if ( $interface->get_editor() != "" && $interface->get_editor() != " , ." ) {
-					$s .= 'In ' . $interface->get_editor() . ' (Eds.), <i>' . $interface->get_booktitle() . '. </i>';
+					$pub_content .= 'In ' . $interface->get_editor() . ' (Eds.), <em>' . $interface->get_booktitle() . '. </em>';
 				} else {
-					$s .= 'In <i>' . $interface->get_booktitle() . '. </i>';
+					$pub_content .= 'In <em>' . $interface->get_booktitle() . '. </em>';
 				}
 			}
 			if ( $interface->get_address() != "" ) {
-				$s .= $interface->get_address() . ': ';
+				$pub_content .= $interface->get_address() . ': ';
 			}
 			if ( $interface->get_publisher() != "" ) {
-				$s .= $interface->get_publisher() . ', ';
+				$pub_content .= $interface->get_publisher() . ', ';
 			}
 			if ( $interface->get_pages() != "" ) {
-				$s .= $interface->get_pages() . '.';
+				$pub_content .= $interface->get_pages() . '.';
 			}
 			
-			$s .= '</p>';
+			$pub_content .= '</p>';
 			
 		} else{
 			
-			$s .= '<h4 class="tp_pub_title"><i>' . $interface->get_title() . '.</i></h4>';
+			$pub_content .= '<h4 class="tp_pub_title">' . $interface->get_title() . '.</h4>';
 			
 		}
-
-		$s .= '<p class="tp_pub_tags">' . $interface->get_tag_line();
+		$pub_content .= $interface->get_type();
+		$pub_content .= '<p class="tp_pub_tags">' . $interface->get_tag_line();
+		$pub_content .= '<span class="tp_apa_link"><a id="tp_apa-"' . $interface->get_container_no() . 'class="tp_show">APA-Style</a></span>';
+		$pub_content .= '</p>';
+		$pub_content .= '</div>';
+		$pub_content .= '</div>';
+		$pub_content .= $interface->get_infocontainer();
+		$pub_content .= '<div class="tp_apa tp_apa-pub-' . $interface->get_container_no() . '">';
+		$pub_content .= '<p>' . $interface->get_author() . ' (' . $interface->get_year() . ').</p>';
+		// Journal Article
+		if ( $interface->get_type2() == 'article' ) {
+			
+			$pub_content .= '<h4><em>' . $interface->get_title() . '.</em></h4>';
+			$pub_content .= '<p>';
+			
+			if ( $interface->get_journal() != "" ) {
+				$pub_content .= '' . $interface->get_journal() . ', ';
+			}
+			if ( $interface->get_volume() != "" ) {
+				if ( $interface->get_issueno() != "" ) {
+					$pub_content .= $interface->get_volume() . ' (' . $interface->get_issueno() . ').';
+				} else {
+					$pub_content .= $interface->get_volume() . '.';
+				}
+			}
+			if ( $interface->get_pages() != "" ) {
+				$pub_content .= $interface->get_pages() . '. ';
+			}
+			
+			$pub_content .= '</p>';
 		
-		$s .= '</p>';
-		$s .= '</div>';
-		$s .= '<div class="col-12 col-md-2 col-lg-2 col-xl-2">' . $interface->get_type() . '</div>';
-		$s .= '</div>';
-		$s .= $interface->get_infocontainer();
-		$s .= '</article>';
-		return $s;
+		// Conference	
+		} elseif ( $interface->get_type2() == 'conference' ) {
+
+			$pub_content .= '<h4>' . $interface->get_title() . '.</h4>';
+			$pub_content .= '<p>';
+
+			if ( $interface->get_booktitle() != "" ) {
+				if ( $interface->get_editor() != "" && $interface->get_editor() != " , ." ) {
+					$pub_content .= 'In ' . $interface->get_editor() . ' (Eds.), ' . $interface->get_booktitle() . '.';
+				} else {
+					$pub_content .= 'In ' . $interface->get_booktitle() . '.';
+				}
+			}
+			if ( $interface->get_address() != "" ) {
+				$pub_content .= $interface->get_address() . ': ';
+			}
+			if ( $interface->get_publisher() != "" ) {
+				$pub_content .= $interface->get_publisher() . '.';
+			}
+			
+			$pub_content .= '</p>';
+		
+		// Book	
+		} elseif ( $interface->get_type2() == 'book' ) {
+
+			$pub_content .= '<h4><i>' . $interface->get_title() . '.</i></h4>';
+			$pub_content .= '<p>';
+			
+			if ( $interface->get_address() != "" ) {
+				$pub_content .= '' . $interface->get_address() . ': ';
+			}
+			if ( $interface->get_publisher() != "" ) {
+				$pub_content .= $interface->get_publisher() . '.';
+			}
+			
+			$pub_content .= '</p>';
+		
+		// Inproceedings	
+		} elseif ( $interface->get_type2() == 'inproceedings' ) {
+
+			$pub_content .= '<h4>' . $interface->get_title() . '.</h4>';
+			$pub_content .= '<p>';
+
+			if ( $interface->get_booktitle() != "" ) {
+				if ( $interface->get_editor() != "" && $interface->get_editor() != " , ." ) {
+					$pub_content .= 'In ' . $interface->get_editor() . ' (Eds.), ' . $interface->get_booktitle() . '.';
+				} else {
+					$pub_content .= 'In ' . $interface->get_booktitle() . '.';
+				}
+			}
+			if ( $interface->get_address() != "" ) {
+				$pub_content .= $interface->get_address() . ': ';
+			}
+			if ( $interface->get_publisher() != "" ) {
+				$pub_content .= $interface->get_publisher() . ', ';
+			}
+			if ( $interface->get_pages() != "" ) {
+				$pub_content .= $interface->get_pages() . '.';
+			}
+			
+			$pub_content .= '</p>';
+		
+		// Technical report	
+		} elseif ( $interface->get_type2() == 'techreport' ) {
+
+			$pub_content .= '<h4>' . $interface->get_title() . '.</h4>';
+			$pub_content .= '<p>';
+			
+			if ( $interface->get_address() != "" ) {
+				$pub_content .= '' . $interface->get_address() . ': ';
+			}
+			if ( $interface->get_institution() != "" ) {
+				$pub_content .= $interface->get_institution() . '.';
+			}
+			
+			$pub_content .= '</p>';
+		
+		// Booklet	
+		} elseif ( $interface->get_type2() == 'booklet' ) {
+
+			$pub_content .= '<h4>' . $interface->get_title() . '.</h4>';
+			$pub_content .= '<p>';
+			
+			if ( $interface->get_address() != "" ) {
+				$pub_content .= '' . $interface->get_address() . '.';
+			}	
+			
+			$pub_content .= '</p>';
+		
+		// Masters thesis
+		} elseif ( $interface->get_type2() == 'mastersthesis' ||  $interface->get_type2() == 'phdthesis') {
+
+			$pub_content .= '<h4>' . $interface->get_title() . '.</h4>';
+			$pub_content .= '<p>';
+
+			if ( $interface->get_address() != "" ) {
+				$pub_content .= '' . $interface->get_address() . ': ';
+			}
+			
+			if ( $interface->get_school() != "" ) {
+				$pub_content .= '' . $interface->get_school() . '.';
+			}	
+			
+			$pub_content .= '</p>';
+		
+		// Incollection	
+		} elseif ( $interface->get_type2() == 'incollection' ) {
+
+			$pub_content .= '<h4>' . $interface->get_title() . '.</h4>';
+			$pub_content .= '<p>';
+
+			if ( $interface->get_booktitle() != "" ) {
+				if ( $interface->get_editor() != "" && $interface->get_editor() != " , ." ) {
+					$pub_content .= 'In ' . $interface->get_editor() . ' (Eds.), ' . $interface->get_booktitle() . '. ';
+				} else {
+					$pub_content .= 'In ' . $interface->get_booktitle() . '. ';
+				}
+			}
+			if ( $interface->get_address() != "" ) {
+				$pub_content .= $interface->get_address() . ': ';
+			}
+			if ( $interface->get_publisher() != "" ) {
+				$pub_content .= $interface->get_publisher() . ', ';
+			}
+			if ( $interface->get_pages() != "" ) {
+				$pub_content .= $interface->get_pages() . '.';
+			}
+			
+			$pub_content .= '</p>';
+			
+		} else{
+			
+			$pub_content .= '<h4>' . $interface->get_title() . '.</h4>';
+			
+		}
+		$pub_content .= '<p class="tp_close_menu"><a class="tp_apa_close">Close</a></p>';
+		$pub_content .= '</div>';
+		$pub_content .= '</article>';
+		return $pub_content;
 	}
 }

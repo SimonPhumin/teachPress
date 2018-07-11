@@ -4,20 +4,14 @@
  * Author: Simon Phumin Schweikert, Joel Rixen
 */
 
-
-
-article.tp_pub_info {border-bottom:1px solid silver; vertical-align:top; padding: 10px 0;}
-.tp_pub_author, #content p.tp_pub_author {font-size:small; margin-bottom:1px; margin-top:1px;}
-
-.tp_pub_title, a.tp_title_link, #content p.tp_pub_title {font-size:small; font-weight:bold; margin-top:1px; margin-bottom:1px;}
-
-.tp_pub_additional, #content p.tp_pub_additional {font-size:small; margin: 0;}
-.tp_pub_tags, #content p.tp_pub_tags  {font-size:small; margin-top:1px; margin-bottom:1px; color:#AAAAAA;}
+.tp_pub_author, #content p.tp_pub_author {font-size:1rem; margin-bottom:1px; margin-top:1px;}
+.tp_pub_title, a.tp_title_link, #content p.tp_pub_title {font-size:1rem; margin-top:1px; margin-bottom:1px;}
+.tp_pub_additional, #content p.tp_pub_additional {font-size:1rem; margin: 0;}
+.tp_pub_tags, #content p.tp_pub_tags  {font-size:1rem; margin-top:1px; margin-bottom:1px; color:#AAAAAA;}
 .tp_pub_tags a {color:#000; text-decoration:underline; box-shadow: none;}
 .tp_pub_tags a:hover {color:#000; text-decoration:none;}
 .tp_resource_link {margin: 0;}
 .tp_resource_link a svg:hover #pdf {fill: #fff;}
-
 .teachpress_publication_list td {padding: 5px 0;}
 a->#tp_links_sh_4 svg:hover #pdf{fill: #fff;}
 .tp_pub_type {background-color: #ce1628; color: #fff; display: inline-block; padding: 10px 15px; margin-left: 5px; font-size: 13px; font-weight: bold; line-height: 1;}
@@ -65,9 +59,7 @@ font-weight: normal !important;
 
 .tp_pub_title{
 	font-style: italic;
-	letter-spacing: 0;
 	font-weight: normal;
-color:#000;
 }
 
 .tp_cursive{
@@ -78,8 +70,4 @@ color:#000;
 margin-top: 5px !important;
 }
 
-.tp_single_title {font-size:16px;}
-.tp_single_author {font-size:16px;}
-.tp_single_year {font-size:16px;}
-.tp_single_additional {font-size:16px; font-style:italic;}
-.tp_cite_entry {font-size:16px;}
+.tp_single_title, .tp_single_author, .tp_single_year, .tp_single_additional, .tp_cite_entry {font-size:1rem;}

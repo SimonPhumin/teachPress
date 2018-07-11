@@ -171,6 +171,13 @@ class tp_publication_interface {
      * --------------------------------------HCI-GROUP Custom Functions---------------------
      * APA-Style functions
      */
+
+    public function get_title_linkless () {
+        return tp_html::prepare_title($row['title'], 'decode');
+    }
+    public function get_container_no () {
+        return $this->data['container_id'];
+    }
     public function get_booktitle () {
         return $this->data['row']['booktitle'];
     }
@@ -353,6 +360,8 @@ class tp_publication_interface {
         if ( ($row['url'] != '' || $row['doi'] != '') && ( $settings['link_style'] === 'inline' || $settings['link_style'] === 'direct' ) ) {
             $content .= tp_html_publication_template::get_info_container( tp_html_publication_template::prepare_url($row['url'], $row['doi'], 'list'), 'links', $container_id );
         }
+
+        $content .= tp_html_publication_template::get_info_container( nl2br( tp_bibtex::get_single_publication_bibtex($row, $keywords, $settings['convert_bibtex']) ), 'bibtex', $container_id );
 
         return $content;
 
@@ -541,7 +550,7 @@ class tp_html_publication_template {
      * @return string
      * @since 6.0.0
      */
-    public static function prepare_publication_title ($row, $settings, $container_id) {
+    public static function prepare_publication_title($row, $settings, $container_id) {
         
         // open abstracts instead of links (ignores the rest of the method)
         if ( $settings['title_ref'] === 'abstract' ) {
@@ -579,7 +588,7 @@ class tp_html_publication_template {
     }
     
     /**
-     * Prepares a title if the link should refers to the abstract
+     * Prepares a title if the link should refer to the abstract
      * @param array $row                The publication array
      * @param string $container_id      The basic ID for div container
      * @return string
@@ -624,7 +633,7 @@ class tp_html_publication_template {
                 if ( $length > 80 ) {
                     $parts[1] .= '[...]';
                 }
-                $end .= '<li><a class="tp_pub_list" style="background-image: url(' . get_tp_mimetype_images( $parts[0] ) . ')" href="' . $parts[0] . '" title="' . $parts[1] . '" target="_blank">' . $parts[1] . '</a></li>';
+                $end .= '<li><a class="tp_pub_list" href="' . $parts[0] . '" title="' . $parts[1] . '" target="_blank">' . $parts[1] . '</a></li>';
             }
             // enumeration mode
             else {

@@ -1314,10 +1314,9 @@ function tplist_hci_shortcode($atts) {
 
         // Filter no. of entries
         if ( $atts['entries_per_page'] == '10000' || $atts['entries_per_page'] == '10' || strpos($atts['entries_per_page'], ',') !== false ) {
-        $filter .= '<form method="GET"><select name="show_all" onchange="this.form.submit()">';
         $filter .=  $option_selected_all;
         $filter .=  $option_selected_ten;
-        $filter .= '</select></form>';
+        $filter .= '</select>';
         }
 
     // Filter year

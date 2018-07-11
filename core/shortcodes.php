@@ -1203,7 +1203,7 @@ function tplist_hci_shortcode($atts) {
         'title_ref' => 'links',
         'link_style' => 'inline',
         'date_format' => 'd.m.Y',
-        'pagination' => 0,
+        'pagination' => 1,
         'entries_per_page' => 10000,
         'sort_list' => '',
         'show_tags_as' => 'pulldown',
@@ -1216,6 +1216,11 @@ function tplist_hci_shortcode($atts) {
     ), $atts);
 
 
+/*if($_POST['show_all'] == "2"){
+            $atts['entries_per_page'] = 10000;
+    }else{
+        $atts['entries_per_page'] = 10;
+    }*/
 
 
    
@@ -1296,28 +1301,27 @@ function tplist_hci_shortcode($atts) {
 
         // no. of entries
 
-        $option_selected_ten =  '<option value="2">10 Entries per Page</option>';
-        $option_selected_all =  '<option selected="selected" value="1">All Entries</option>';
+        ////$option_selected_all =  '<option selected="selected" value="1">All Entries</option>';
 
-        if(isset($_POST["show_all"]) == "2"){
-            $option_selected_all =  '<option value="1">All Entries</option>';
-            $option_selected_ten =  '<option selected="selected" value="2">10 Entries per Page</option>';
-            $atts['entries_per_page'] = 10;
+        //if(isset($_POST["show_all"]) == "2"){
+           // $option_selected_all =  '<option value="1">All Entries</option>';
+            //$option_selected_ten =  '<option selected="selected" value="2">10 Entries per Page</option>';
+            //$atts['entries_per_page'] = 10;
             
-        }
-        else{
-            $option_selected_ten =  '<option value="2">10 Entries per Page</option>';
-            $option_selected_all =  '<option selected="selected" value="1">All Entries</option>';
-            $atts['entries_per_page'] = 10000;
+        //}
+        //else{
+            //$option_selected_ten =  '<option value="2">10 Entries per Page</option>';
+            //$option_selected_all =  '<option selected="selected" value="1">All Entries</option>';
+            //$atts['entries_per_page'] = 10000;
             
-        }
+        //}
 
         // Filter no. of entries
-        if ( $atts['entries_per_page'] == '10000' || $atts['entries_per_page'] == '10' || strpos($atts['entries_per_page'], ',') !== false ) {
-        $filter .=  $option_selected_all;
-        $filter .=  $option_selected_ten;
-        $filter .= '</select>';
-        }
+        //if ( $atts['entries_per_page'] == '10000' || $atts['entries_per_page'] == '10' || strpos($atts['entries_per_page'], ',') !== false ) {
+        //$filter .=  $option_selected_all;
+        //$filter .=  $option_selected_ten;
+        //$filter .= '</select>';
+        //}
 
     // Filter year
     if ( $atts['year'] == '' || strpos($atts['year'], ',') !== false ) {
@@ -1343,10 +1347,8 @@ function tplist_hci_shortcode($atts) {
         $showall = '<a rel="nofollow" href="' . $settings['permalink'] . $settings['html_anchor'] . '" title="' . __('Show all','teachpress') . '">' . __('Show all','teachpress') . '</a>';
     }
     
-    // complete the header (tag cloud + filter)
-    $part1 = '<a name="tppubs" id="tppubs"' . $settings['container_suffix'] . '></a>
-            <div class="teachpress_filter">' . $filter . '</div>
-            <p style="text-align:center">' . $showall . '</p>';
+    // complete the header (tag cloud + filter) add Bootstrap col-12 to filter container
+    $part1 = '<div class="col-12 teachpress_filter">' . $filter .  '<p style="text-align:center">' . $showall . '</p></div>';
 
 
     /************************/

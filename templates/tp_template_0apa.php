@@ -32,14 +32,6 @@ implements tp_publication_template {
 	 */
 	public
 
-
-	/*function get_body( $content, $args = array() ) {
-		return '<table class="teachpress_publication_list"><form method="post"><select name="show_all" onchange="this.form.submit()">
-		<option value="0">No. of entries per page</option>
-		<option value="1">Show 10 entries per page</option>
-		<option value="2">Show all entries</option></select></form>' . $content . '</table>';
-	}*/
-
 	function get_body( $content, $args = array() ) {
 		return '<div class="row teachpress_publication_list">' . $content . '</div>';
 	}
@@ -53,7 +45,7 @@ implements tp_publication_template {
 	public
 
 	function get_headline( $content, $args = array() ) {
-		return '<div class="tp_headline_2 col-12 pl-0 pr-0"><h2 class="tp_h2" id="tp_h2_' . esc_attr( $content ) . '">' . $content . '</h2></div>';
+		return '<div class="tp_headline_2 col-12"><h2 class="tp_h2" id="tp_h2_' . esc_attr( $content ) . '">' . $content . '</h2></div>';
 	}
 
 	/**
@@ -65,7 +57,7 @@ implements tp_publication_template {
 	public
 
 	function get_headline_sl( $content, $args = array() ) {
-		return '<div class="tp_headline_3 col-12 pl-0 pr-0"><h3 class="tp_h3" id="tp_h3_' . esc_attr( $content ) . '">' . $content . '</h3></div>';
+		return '<div class="tp_headline_3 col-12"><h3 class="tp_h3" id="tp_h3_' . esc_attr( $content ) . '">' . $content . '</h3></div>';
 	}
 
 	/**
@@ -89,7 +81,7 @@ implements tp_publication_template {
 	public
 
 	function get_entry( $interface ) {
-		$pub_content = '<article class="col-12 pl-0 pr-0 tp_publication">';
+		$pub_content = '<article class="col-12 tp_publication">';
 		$pub_content .= '<div class="row">';
 		$pub_content .= '<div class="tp_pub_info col-12">';
 		$pub_content .= '<p class="tp_pub_author">' . $interface->get_author() . ' (' . $interface->get_year() . ').</p>';
@@ -253,18 +245,19 @@ implements tp_publication_template {
 		}
 		$pub_content .= $interface->get_type();
 		$pub_content .= '<p class="tp_pub_tags">' . $interface->get_tag_line();
-		$pub_content .= '<span class="tp_apa_link"><a id="tp_apa-"' . $interface->get_container_no() . 'class="tp_show">APA-Style</a></span>';
+		$pub_content .= '<span class="tp_apa_link"><a id="tp_apa_sh_' . $interface->get_container_no() . '" class="tp_apa_close" onclick="teachpress_pub_showhide(\'';
+		$pub_content .= $interface->get_container_no() . '\'';
+		$pub_content .= ',\'tp_apa\')">APA-Style</a></span>';
 		$pub_content .= '</p>';
 		$pub_content .= '</div>';
 		$pub_content .= '</div>';
 		$pub_content .= $interface->get_infocontainer();
-		$pub_content .= '<div class="tp_apa tp_apa-pub-' . $interface->get_container_no() . '">';
-		$pub_content .= '<p>' . $interface->get_author() . ' (' . $interface->get_year() . ').</p>';
+		$pub_content .= '<div class="tp_apa" id="tp_apa_' . $interface->get_container_no() . '">';
+		$pub_content .= '<p>' . $interface->get_author() . ' (' . $interface->get_year() . '). ';
 		// Journal Article
 		if ( $interface->get_type2() == 'article' ) {
 			
-			$pub_content .= '<h4><em>' . $interface->get_title() . '.</em></h4>';
-			$pub_content .= '<p>';
+			$pub_content .= '<em>' . $interface->get_title() . '. </em>';
 			
 			if ( $interface->get_journal() != "" ) {
 				$pub_content .= '' . $interface->get_journal() . ', ';
@@ -280,19 +273,17 @@ implements tp_publication_template {
 				$pub_content .= $interface->get_pages() . '. ';
 			}
 			
-			$pub_content .= '</p>';
 		
 		// Conference	
 		} elseif ( $interface->get_type2() == 'conference' ) {
 
-			$pub_content .= '<h4>' . $interface->get_title() . '.</h4>';
-			$pub_content .= '<p>';
+			$pub_content .= '<em>' . $interface->get_title() . '. </em>';
 
 			if ( $interface->get_booktitle() != "" ) {
 				if ( $interface->get_editor() != "" && $interface->get_editor() != " , ." ) {
-					$pub_content .= 'In ' . $interface->get_editor() . ' (Eds.), ' . $interface->get_booktitle() . '.';
+					$pub_content .= 'In ' . $interface->get_editor() . ' (Eds.), ' . $interface->get_booktitle() . '. ';
 				} else {
-					$pub_content .= 'In ' . $interface->get_booktitle() . '.';
+					$pub_content .= 'In ' . $interface->get_booktitle() . '. ';
 				}
 			}
 			if ( $interface->get_address() != "" ) {
@@ -302,13 +293,11 @@ implements tp_publication_template {
 				$pub_content .= $interface->get_publisher() . '.';
 			}
 			
-			$pub_content .= '</p>';
 		
 		// Book	
 		} elseif ( $interface->get_type2() == 'book' ) {
 
-			$pub_content .= '<h4><i>' . $interface->get_title() . '.</i></h4>';
-			$pub_content .= '<p>';
+			$pub_content .= '<em>' . $interface->get_title() . '. </em>';
 			
 			if ( $interface->get_address() != "" ) {
 				$pub_content .= '' . $interface->get_address() . ': ';
@@ -317,81 +306,11 @@ implements tp_publication_template {
 				$pub_content .= $interface->get_publisher() . '.';
 			}
 			
-			$pub_content .= '</p>';
 		
 		// Inproceedings	
 		} elseif ( $interface->get_type2() == 'inproceedings' ) {
 
-			$pub_content .= '<h4>' . $interface->get_title() . '.</h4>';
-			$pub_content .= '<p>';
-
-			if ( $interface->get_booktitle() != "" ) {
-				if ( $interface->get_editor() != "" && $interface->get_editor() != " , ." ) {
-					$pub_content .= 'In ' . $interface->get_editor() . ' (Eds.), ' . $interface->get_booktitle() . '.';
-				} else {
-					$pub_content .= 'In ' . $interface->get_booktitle() . '.';
-				}
-			}
-			if ( $interface->get_address() != "" ) {
-				$pub_content .= $interface->get_address() . ': ';
-			}
-			if ( $interface->get_publisher() != "" ) {
-				$pub_content .= $interface->get_publisher() . ', ';
-			}
-			if ( $interface->get_pages() != "" ) {
-				$pub_content .= $interface->get_pages() . '.';
-			}
-			
-			$pub_content .= '</p>';
-		
-		// Technical report	
-		} elseif ( $interface->get_type2() == 'techreport' ) {
-
-			$pub_content .= '<h4>' . $interface->get_title() . '.</h4>';
-			$pub_content .= '<p>';
-			
-			if ( $interface->get_address() != "" ) {
-				$pub_content .= '' . $interface->get_address() . ': ';
-			}
-			if ( $interface->get_institution() != "" ) {
-				$pub_content .= $interface->get_institution() . '.';
-			}
-			
-			$pub_content .= '</p>';
-		
-		// Booklet	
-		} elseif ( $interface->get_type2() == 'booklet' ) {
-
-			$pub_content .= '<h4>' . $interface->get_title() . '.</h4>';
-			$pub_content .= '<p>';
-			
-			if ( $interface->get_address() != "" ) {
-				$pub_content .= '' . $interface->get_address() . '.';
-			}	
-			
-			$pub_content .= '</p>';
-		
-		// Masters thesis
-		} elseif ( $interface->get_type2() == 'mastersthesis' ||  $interface->get_type2() == 'phdthesis') {
-
-			$pub_content .= '<h4>' . $interface->get_title() . '.</h4>';
-			$pub_content .= '<p>';
-
-			if ( $interface->get_address() != "" ) {
-				$pub_content .= '' . $interface->get_address() . ': ';
-			}
-			
-			if ( $interface->get_school() != "" ) {
-				$pub_content .= '' . $interface->get_school() . '.';
-			}	
-			
-			$pub_content .= '</p>';
-		
-		// Incollection	
-		} elseif ( $interface->get_type2() == 'incollection' ) {
-
-			$pub_content .= '<h4>' . $interface->get_title() . '.</h4>';
-			$pub_content .= '<p>';
+			$pub_content .= '<em>' . $interface->get_title() . '. </em>';
 
 			if ( $interface->get_booktitle() != "" ) {
 				if ( $interface->get_editor() != "" && $interface->get_editor() != " , ." ) {
@@ -410,14 +329,77 @@ implements tp_publication_template {
 				$pub_content .= $interface->get_pages() . '.';
 			}
 			
-			$pub_content .= '</p>';
+		
+		// Technical report	
+		} elseif ( $interface->get_type2() == 'techreport' ) {
+
+			$pub_content .= '<em>' . $interface->get_title() . '. </em>';
+			
+			if ( $interface->get_address() != "" ) {
+				$pub_content .= '' . $interface->get_address() . ': ';
+			}
+			if ( $interface->get_institution() != "" ) {
+				$pub_content .= $interface->get_institution() . '.';
+			}
+			
+		
+		// Booklet	
+		} elseif ( $interface->get_type2() == 'booklet' ) {
+
+			$pub_content .= '<em>' . $interface->get_title() . '. </em>';
+			$pub_content .= '<p>';
+			
+			if ( $interface->get_address() != "" ) {
+				$pub_content .= '' . $interface->get_address() . '.';
+			}	
+	
+		
+		// Masters thesis
+		} elseif ( $interface->get_type2() == 'mastersthesis' ||  $interface->get_type2() == 'phdthesis') {
+
+			$pub_content .= '<em>' . $interface->get_title() . '. </em>';
+
+			if ( $interface->get_address() != "" ) {
+				$pub_content .= '' . $interface->get_address() . ': ';
+			}
+			
+			if ( $interface->get_school() != "" ) {
+				$pub_content .= '' . $interface->get_school() . '.';
+			}	
+			
+		
+		// Incollection	
+		} elseif ( $interface->get_type2() == 'incollection' ) {
+
+			$pub_content .= '<em>' . $interface->get_title() . '. </em>';
+
+			if ( $interface->get_booktitle() != "" ) {
+				if ( $interface->get_editor() != "" && $interface->get_editor() != " , ." ) {
+					$pub_content .= 'In ' . $interface->get_editor() . ' (Eds.), ' . $interface->get_booktitle() . '. ';
+				} else {
+					$pub_content .= 'In ' . $interface->get_booktitle() . '. ';
+				}
+			}
+			if ( $interface->get_address() != "" ) {
+				$pub_content .= $interface->get_address() . ': ';
+			}
+			if ( $interface->get_publisher() != "" ) {
+				$pub_content .= $interface->get_publisher() . ', ';
+			}
+			if ( $interface->get_pages() != "" ) {
+				$pub_content .= $interface->get_pages() . '.';
+			}
+			
 			
 		} else{
 			
-			$pub_content .= '<h4>' . $interface->get_title() . '.</h4>';
+			$pub_content .= '<em>' . $interface->get_title() . '. </em>';
 			
 		}
-		$pub_content .= '<p class="tp_close_menu"><a class="tp_apa_close">Close</a></p>';
+		$pub_content .= '<p class="tp_close_menu"><a class="tp_apa_close" onclick="teachpress_pub_showhide(\'';
+
+		$pub_content .= $interface->get_container_no() . '\'';
+		$pub_content .= ',\'tp_apa\')">Close</a></p>';
 		$pub_content .= '</div>';
 		$pub_content .= '</article>';
 		return $pub_content;

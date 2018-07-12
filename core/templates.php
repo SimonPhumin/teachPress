@@ -230,7 +230,7 @@ class tp_publication_interface {
     }
 
     /**
-     * Returns the tags
+     * Returns the tags hci style
      * @param string $before
      * @param string $after
      * @return string
@@ -554,30 +554,27 @@ class tp_html_publication_template {
         
         // open abstracts instead of links (ignores the rest of the method)
         if ( $settings['title_ref'] === 'abstract' ) {
-            return self::prepare_title_link_to_abstracts($row, $container_id);
+            return tp_html::prepare_title($row['title'], 'decode');
         }
         
         // Use a related page as link
         if ( $row['rel_page'] != 0 ) {
-            return '<a href="' . get_permalink($row['rel_page']) . '">' . stripslashes($row['title']) . '</a>';
+            return tp_html::prepare_title($row['title'], 'decode');
         }
         
         // for inline style
         elseif ( ($row['url'] != '' || $row['doi'] != '') && $settings['link_style'] === 'inline' ) {
-            return '<a class="tp_title_link" onclick="teachpress_pub_showhide(' . "'" . $container_id . "'" . ',' . "'" . 'tp_links' . "'" . ')" style="cursor:pointer;">' . tp_html::prepare_title($row['title'], 'decode') . '</a>';
+            return tp_html::prepare_title($row['title'], 'decode');
         }
         
         // for direct style (if a DOI numer exists)
         elseif ( $row['doi'] != '' && $settings['link_style'] === 'direct' ) {
-            $doi_url = TEACHPRESS_DOI_RESOLVER . $row['doi'];
-            $title = tp_html::prepare_title($row['title'], 'decode');
-            return '<a class="tp_title_link" href="' . $doi_url . '" title="' . $title . '" target="blank">' . $title . '</a>'; 
+            return tp_html::prepare_title($row['title'], 'decode'); 
         }
         
         // for direct style (use the first available URL)
         elseif ( $row['url'] != '' && $settings['link_style'] === 'direct' ) { 
-            $parts = tp_bibtex::explode_url($row['url']); 
-            return '<a class="tp_title_link" href="' . $parts[0][0] . '" title="' . $parts[0][1] . '" target="blank">' . tp_html::prepare_title($row['title'], 'decode') . '</a>'; 
+            return tp_html::prepare_title($row['title'], 'decode'); 
         } 
         
         // if there is no link

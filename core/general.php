@@ -238,7 +238,7 @@ function tp_load_template($slug) {
 function tp_page_menu ($atts) {
     $atts = shortcode_atts(array(
        'number_entries' => 0,
-       'entries_per_page' => 50,
+       'entries_per_page' => 10,
        'current_page' => 1,
        'entry_limit' => 0,
        'page_link' => '',
@@ -249,6 +249,13 @@ function tp_page_menu ($atts) {
        'before' => '',
        'after' => ''
     ), $atts);
+
+     /*if(isset($_POST["show_all"]) == "10000"){ 
+        $entries_per_page = 10000;
+     }
+     else {
+        $entries_per_page = 10;
+     }*/
     
     $number_entries = intval($atts['number_entries']);
     $entries_per_page = intval($atts['entries_per_page']);

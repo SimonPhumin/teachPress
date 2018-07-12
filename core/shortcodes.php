@@ -302,12 +302,21 @@ class tp_shortcodes {
             $title = __('All types','teachpress');
         }
 
+        /*  entries filter
+        if ( $mode === 'entries_per_page' ) {
+            $row = array(10000, 10);
+            $id = 'pub_entries';
+            $index = 'entries_p';
+            $title = __('No. of entries per page','teachpress');
+        } */
+
         // generate option
         foreach ( $row as $row ){
             // Set the values for URL parameters
             $current = ( $row[$index] == $filter_parameter[$mode] && $filter_parameter[$mode] != '0' ) ? 'selected="selected"' : '';
             $year = ( $mode === 'year' ) ? $row['year'] : $filter_parameter['year'];
             $type = ( $mode === 'type' ) ? $row['type'] : $filter_parameter['type'];
+            //$type = ( $mode === 'entries_per_page' ) ? $row['entries_per_page'] : $filter_parameter['entries_per_page'];
             
             // Set the label for each select option
             if ( $mode === 'type' ) {
@@ -1215,15 +1224,23 @@ function tplist_hci_shortcode($atts) {
         'show_altmetric_entry' => 0
     ), $atts);
 
+    // no. of entries
 
-/*if($_POST['show_all'] == "2"){
-            $atts['entries_per_page'] = 10000;
-    }else{
-        $atts['entries_per_page'] = 10;
-    }*/
+        if(isset($_POST["all_entries"]) == "10"){
+            $settings['entries_per_page'] = 10;
+             // Handle limits for pagination   
+    
+        }
+        else{
+            $settings['entries_per_page'] = 10000;         
+        }
+ 
 
-
-   
+    // ignore hide_tags if exclude_tags is given 
+    if ( $sql_parameter['exclude_tags'] != '' ) {
+        $atts['hide_tags'] = $sql_parameter['exclude_tags'];
+    }
+  
     $settings = array(
         'author_name' => htmlspecialchars($atts['author_name']),
         'editor_name' => htmlspecialchars($atts['editor_name']),
@@ -1249,6 +1266,7 @@ function tplist_hci_shortcode($atts) {
         'show_altmetric_entry' => ($atts['show_altmetric_entry'] == '1') ? true : false,
         'show_altmetric_donut' => ($atts['show_altmetric_donut'] == '1') ? true : false
     );
+
 
     $cloud_settings = array (
         'show_tags_as' => htmlspecialchars($atts['show_tags_as']),
@@ -1284,44 +1302,35 @@ function tplist_hci_shortcode($atts) {
     if ( $filter_parameter['year'] === '' ) {
        $filter_parameter['year'] = htmlspecialchars($atts['year']);
     } 
+
+    /* entries_per_page: overwrite filter with the shortcode value if the filter param is unset
+    if ( $filter_parameter['entries_per_page'] === '' ) {
+       $filter_parameter['entries_per_page'] = htmlspecialchars($atts['entries_per_page']);
+    } */
    
-    // Handle limits for pagination   
+      // Handle limits for pagination
     $form_limit = ( isset($_GET['limit']) ) ? intval($_GET['limit']) : '';
     $pagination_limits = tp_shortcodes::generate_pagination_limits($settings['pagination'], $settings['entries_per_page'], $form_limit);
 
-    // ignore hide_tags if exclude_tags is given 
-    if ( $sql_parameter['exclude_tags'] != '' ) {
-        $atts['hide_tags'] = $sql_parameter['exclude_tags'];
-    }
+   
     
     /**********/ 
     /* Filter */
     /**********/
     $filter = '';
 
-        // no. of entries
 
-        ////$option_selected_all =  '<option selected="selected" value="1">All Entries</option>';
-
-        //if(isset($_POST["show_all"]) == "2"){
-           // $option_selected_all =  '<option value="1">All Entries</option>';
-            //$option_selected_ten =  '<option selected="selected" value="2">10 Entries per Page</option>';
-            //$atts['entries_per_page'] = 10;
-            
-        //}
-        //else{
-            //$option_selected_ten =  '<option value="2">10 Entries per Page</option>';
-            //$option_selected_all =  '<option selected="selected" value="1">All Entries</option>';
-            //$atts['entries_per_page'] = 10000;
-            
-        //}
 
         // Filter no. of entries
-        //if ( $atts['entries_per_page'] == '10000' || $atts['entries_per_page'] == '10' || strpos($atts['entries_per_page'], ',') !== false ) {
-        //$filter .=  $option_selected_all;
-        //$filter .=  $option_selected_ten;
-        //$filter .= '</select>';
-        //}
+        /*if ( $atts['entries_per_page'] == '10000' || $atts['entries_per_page'] == '10' || strpos($atts['entries_per_page'], ',') !== false ) {
+        $filter .= '<form method="POST">';
+        $filter .= '<select name="show_all" onchange="this.form.submit()">';
+        $filter .=  $option_selected_all;
+        $filter .=  $option_selected_ten;
+        $filter .= '</select>';
+        $filter .= '</form>';
+        }*/
+       
 
     // Filter year
     if ( $atts['year'] == '' || strpos($atts['year'], ',') !== false ) {
@@ -1334,10 +1343,10 @@ function tplist_hci_shortcode($atts) {
         $filter .= tp_shortcodes::generate_filter_hci($filter_parameter, $sql_parameter, $settings, 'type');
     }
 
-
-  
-
-
+    /* Filter entries
+    if ( $atts['entries_per_page'] == '10000' || $atts['entries_per_page'] == '10' || strpos($atts['entries_per_page'], ',') !== false ) {
+        $filter .= tp_shortcodes::generate_filter_hci($filter_parameter, $sql_parameter, $settings, 'entries_per_page');
+    }*/
 
     // Endformat
     if ($filter_parameter['year'] == '' && ( $filter_parameter['type'] == '' || $filter_parameter['type'] == $atts['type'] ) && ( $filter_parameter['user'] == '' || $filter_parameter['user'] == $atts['user'] ) ) {
@@ -1346,9 +1355,6 @@ function tplist_hci_shortcode($atts) {
     else {
         $showall = '<a rel="nofollow" href="' . $settings['permalink'] . $settings['html_anchor'] . '" title="' . __('Show all','teachpress') . '">' . __('Show all','teachpress') . '</a>';
     }
-    
-    // complete the header (tag cloud + filter) add Bootstrap col-12 to filter container
-    $part1 = '<div class="col-12 teachpress_filter">' . $filter .  '<p style="text-align:center">' . $showall . '</p></div>';
 
 
     /************************/
@@ -1367,6 +1373,8 @@ function tplist_hci_shortcode($atts) {
     if ( $settings['headline'] === 3 || $settings['headline'] === 4 ) {
         $sql_parameter['order'] = "year DESC, type ASC, date DESC";
     }
+
+    
     
     $args = array(
         'tag' => $filter_parameter['tag'], 
@@ -1417,6 +1425,23 @@ function tplist_hci_shortcode($atts) {
         $tpz++;
     }
     
+
+    /*if(isset($_POST["show_all"]) == "10"){
+            $settings['entries_per_page'] = 10;
+             // Handle limits for pagination   
+    $form_limit = ( isset($_GET['limit']) ) ? intval($_GET['limit']) : '';
+    $pagination_limits = tp_shortcodes::generate_pagination_limits($settings['pagination'], $settings['entries_per_page'], $form_limit);
+            
+        }
+        else{
+            $settings['entries_per_page'] = 10000;
+             // Handle limits for pagination   
+    $form_limit = ( isset($_GET['limit']) ) ? intval($_GET['limit']) : '';
+    $pagination_limits = tp_shortcodes::generate_pagination_limits($settings['pagination'], $settings['entries_per_page'], $form_limit);
+            
+        }*/
+
+
     // Sort the array
     // If there are publications
     if ( $tpz != 0 ) {
@@ -1431,6 +1456,33 @@ function tplist_hci_shortcode($atts) {
                                                                        'mode' => 'bottom',
                                                                        'before' => '<div class="tablenav">',
                                                                        'after' => '</div>')) : '';
+        
+
+      // generate option
+
+            $current = 'selected="selected"';
+
+            if ($atts['entries_per_page'] == '10000') {
+            // Write the select option
+            $options = '<option value = "tgid=' . '&amp;yr=' . $filter_parameter['year'] . '&amp;type=' . $filter_parameter['type'] . $settings['html_anchor'] . '" ' . $current . '>All</option>';
+            }
+            else {
+            $options .= '<option value = "tgid=' . '&amp;yr=' . $filter_parameter['year'] . '&amp;type=' . $filter_parameter['type'] . $settings['html_anchor'] . '" ' . $current . '>T-E-N</option>';    
+            }
+
+        // return filter menu
+        $filter_entries = '<form method="POST">';
+        $filter_entries .= '<select name="all_links" id="all_links" onchange="teachpress_jumpMenu(' . "'" . 'parent' . "'" . ',this, ' . "'" . $settings['permalink'] . "'" . ')">';
+        $filter_entries .= $options;
+        $filter_entries .= '</select>';
+        $filter_entries .= '</form>';
+
+        $filter .= $filter_entries;
+    
+    // complete the header (tag cloud + filter) add Bootstrap col-12 to filter container
+    $part1 = '<div class="col-12 teachpress_filter">' . $filter .  '<p style="text-align:center">' . $showall . '</p></div>';
+
+
         //remove top pagination
         //$part2 .= $menu;
         $row_year = tp_publications::get_years( 
@@ -1550,7 +1602,7 @@ function tp_cloud_shortcode($atts) {
         'link_style' => 'inline',
         'date_format' => 'd.m.Y',
         'pagination' => 1,
-        'entries_per_page' => 50,
+        'entries_per_page' => 10,
         'sort_list' => '',
         'show_tags_as' => 'cloud',
         'show_author_filter' => 1,
@@ -1879,7 +1931,7 @@ function tp_list_shortcode($atts){
        'link_style' => 'inline',
        'date_format' => 'd.m.Y',
        'pagination' => 1,
-       'entries_per_page' => 50,
+       'entries_per_page' => 10,
        'sort_list' => '',
        'show_bibtex' => 1,
        'container_suffix' => '',

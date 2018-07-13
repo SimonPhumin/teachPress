@@ -82,8 +82,8 @@ implements tp_publication_template {
 
 	function get_entry( $interface ) {
 		$pub_content = '<article class="col-12 tp_publication">';
-		$pub_content .= '<div class="row">';
-		$pub_content .= '<div class="tp_pub_info col-12">';
+		
+		$pub_content .= '<div class="tp_pub_info">';
 		$pub_content .= '<p class="tp_pub_author">' . $interface->get_author() . ' (' . $interface->get_year() . ').</p>';
 
 		// Journal Article
@@ -97,7 +97,7 @@ implements tp_publication_template {
 			}
 			if ( $interface->get_volume() != "" ) {
 				if ( $interface->get_issueno() != "" ) {
-					$pub_content .= $interface->get_volume() . ' (' . $interface->get_issueno() . ').';
+					$pub_content .= $interface->get_volume() . ' (' . $interface->get_issueno() . '). ';
 				} else {
 					$pub_content .= $interface->get_volume() . '.';
 				}
@@ -116,7 +116,7 @@ implements tp_publication_template {
 
 			if ( $interface->get_booktitle() != "" ) {
 				if ( $interface->get_editor() != "" && $interface->get_editor() != " , ." ) {
-					$pub_content .= 'In ' . $interface->get_editor() . ' (Eds.), ' . $interface->get_booktitle() . '.';
+					$pub_content .= 'In ' . $interface->get_editor() . ' (Eds.), ' . $interface->get_booktitle() . '. ';
 				} else {
 					$pub_content .= 'In ' . $interface->get_booktitle() . '.';
 				}
@@ -153,9 +153,9 @@ implements tp_publication_template {
 
 			if ( $interface->get_booktitle() != "" ) {
 				if ( $interface->get_editor() != "" && $interface->get_editor() != " , ." ) {
-					$pub_content .= 'In ' . $interface->get_editor() . ' (Eds.), ' . $interface->get_booktitle() . '.';
+					$pub_content .= 'In ' . $interface->get_editor() . ' (Eds.), ' . $interface->get_booktitle() . '. ';
 				} else {
-					$pub_content .= 'In ' . $interface->get_booktitle() . '.';
+					$pub_content .= 'In ' . $interface->get_booktitle() . '. ';
 				}
 			}
 			if ( $interface->get_address() != "" ) {
@@ -221,7 +221,7 @@ implements tp_publication_template {
 
 			if ( $interface->get_booktitle() != "" ) {
 				if ( $interface->get_editor() != "" && $interface->get_editor() != " , ." ) {
-					$pub_content .= 'In ' . $interface->get_editor() . ' (Eds.), <em>' . $interface->get_booktitle() . '. </em>';
+					$pub_content .= 'In <em>' . $interface->get_editor() . ' (Eds.), ' . $interface->get_booktitle() . '. </em>';
 				} else {
 					$pub_content .= 'In <em>' . $interface->get_booktitle() . '. </em>';
 				}
@@ -249,8 +249,7 @@ implements tp_publication_template {
 		$pub_content .= $interface->get_container_no() . '\'';
 		$pub_content .= ',\'tp_apa\')">APA-Style</a></span>';
 		$pub_content .= '</p>';
-		$pub_content .= '</div>';
-		$pub_content .= '</div>';
+		
 		$pub_content .= $interface->get_infocontainer();
 		$pub_content .= '<div class="tp_apa" id="tp_apa_' . $interface->get_container_no() . '">';
 		$pub_content .= '<p>' . $interface->get_author() . ' (' . $interface->get_year() . '). ';
@@ -310,11 +309,11 @@ implements tp_publication_template {
 		// Inproceedings	
 		} elseif ( $interface->get_type2() == 'inproceedings' ) {
 
-			$pub_content .= '<em>' . $interface->get_title() . '. </em>';
+			$pub_content .= '' . $interface->get_title() . '. ';
 
 			if ( $interface->get_booktitle() != "" ) {
 				if ( $interface->get_editor() != "" && $interface->get_editor() != " , ." ) {
-					$pub_content .= 'In ' . $interface->get_editor() . ' (Eds.), ' . $interface->get_booktitle() . '. ';
+					$pub_content .= 'In <em>' . $interface->get_editor() . ' (Eds.), ' . $interface->get_booktitle() . '. </em>';
 				} else {
 					$pub_content .= 'In ' . $interface->get_booktitle() . '. ';
 				}
@@ -396,11 +395,11 @@ implements tp_publication_template {
 			$pub_content .= '<em>' . $interface->get_title() . '. </em>';
 			
 		}
-		$pub_content .= '<p class="tp_close_menu"><a class="tp_apa_close" onclick="teachpress_pub_showhide(\'';
+		$pub_content .= '<p class="tp_close_menu"><a class="tp_close" onclick="teachpress_pub_showhide(\'';
 
 		$pub_content .= $interface->get_container_no() . '\'';
 		$pub_content .= ',\'tp_apa\')">Close</a></p>';
-		$pub_content .= '</div>';
+		
 		$pub_content .= '</article>';
 		return $pub_content;
 	}

@@ -12,7 +12,7 @@
  * @package teachpress\core\shortcodes
  */
 class tp_shortcodes {
-    
+   
     /**
      * Returns a table headline for a course document list
      * @param array $row        An associative array of document data (i.e. name)

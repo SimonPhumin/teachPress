@@ -261,11 +261,14 @@ function get_pub_tag_list()
 {
     // List of publication tags
     $pub_tag_list = array();
+    $pub_tag_name = array();
+    $pub_tag_id = array();
     $pub_tags  = tp_tags::get_tags();
+
     foreach ($pub_tags as $pub_tag) {
-        $pub_tag_list[] = array('text' => $pub_tag->name, 'value' => intval($pub_tag->tag_id));
-        echo $pub_tag->tag_id;
+        $pub_tag_list[] = $pub_tag->tag_id . '-' . $pub_tag->name;  
     }
+    $pub_tag_list = array_unique ( $pub_tag_list );
     return $pub_tag_list;
 }
 

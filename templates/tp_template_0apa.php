@@ -260,13 +260,13 @@ implements tp_publication_template {
 			$pub_content .= '' . $interface->get_title() . '. ';
 			
 			if ( $interface->get_journal() != "" ) {
-				$pub_content .= '<em>' . $interface->get_journal() . ', ';
+				$pub_content .= '<em>' . $interface->get_journal() . ', </em>';
 			}
 			if ( $interface->get_volume() != "" ) {
 				if ( $interface->get_issueno() != "" ) {
-					$pub_content .= $interface->get_volume() . '</em> (' . $interface->get_issueno() . '). ';
+					$pub_content .= '<em>' .  $interface->get_volume() . ' (' . $interface->get_issueno() . '). </em>';
 				} else {
-					$pub_content .= $interface->get_volume() . '. </em>';
+					$pub_content .= '<em>' . $interface->get_volume() . '. </em>';
 				}
 			}
 			if ( $interface->get_pages() != "" ) {

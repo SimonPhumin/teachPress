@@ -264,7 +264,7 @@ class tp_shortcodes {
         $filter_parameter[$mode] = '';
         
         // return filter menu
-        return '<select name="' . $id . '" id="' . $id . '" onchange="teachpress_jumpMenu(' . "'" . 'parent' . "'" . ',this, ' . "'" . $settings['permalink'] . "'" . ')">
+        return '<<select name="' . $id . '" id="' . $id . '" onchange="teachpress_jumpMenu(' . "'" . 'parent' . "'" . ',this, ' . "'" . $settings['permalink'] . "'" . ')">
                    <option value="tgid=' . $filter_parameter['tag'] . '&amp;yr=' . $filter_parameter['year'] . '&amp;type=' . $filter_parameter['type'] . '&amp;usr=' . $filter_parameter['user'] . '&amp;auth=' . $filter_parameter['author'] . '' . $settings['html_anchor'] . '">' . $title . '</option>
                    ' . $options . '
                 </select>';
@@ -334,10 +334,12 @@ class tp_shortcodes {
         $filter_parameter[$mode] = '';
         
         // return filter menu
-        return '<select name="' . $id . '" id="' . $id . '" onchange="teachpress_jumpMenu(' . "'" . 'parent' . "'" . ',this, ' . "'" . $settings['permalink'] . "'" . ')">
+        return '<div class="hci-tp-filter"><select name="' . $id . '" id="' . $id . '" onchange="teachpress_jumpMenu(' . "'" . 'parent' . "'" . ',this, ' . "'" . $settings['permalink'] . "'" . ')">
                    <option value="tgid=' . '&amp;yr=' . $filter_parameter['year'] . '&amp;type=' . $filter_parameter['type'] . '' . $settings['html_anchor'] . '">' . $title . '</option>
                    ' . $options . '
-                </select>';
+                </select><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 15">
+                              <path id="arrow-down" fill="#9B9B9B" fill-rule="evenodd" d="M6.57188311,11.5010146 L6.57188311,0.912755869 L6.57188311,0 L8.42811689,0 L8.42811689,0.912755869 L8.42811689,11.5010146 L13.0302087,6.96182801 L13.6855256,6.31546856 L15,7.60441035 L14.3446831,8.2507698 L8.81063935,13.7091697 L8.81255408,13.7110582 L8.15627845,14.3545862 L7.50192034,15 L7.5,14.998117 L7.49807966,15 L6.84372155,14.3545862 L6.18744592,13.7110582 L6.18936065,13.7091697 L0.655316871,8.2507698 L-1.77635684e-15,7.60441035 L1.31447443,6.31546856 L1.9697913,6.96182801 L6.57188311,11.5010146 Z"/>
+                                </svg></div>';
     }
     /**
      * 
@@ -1319,7 +1321,7 @@ function tplist_hci_shortcode($atts) {
         $showall = '';
     }
     else {
-        $showall = '<a rel="nofollow" href="' . $settings['permalink'] . $settings['html_anchor'] . '" title="' . __('Reset Filter','teachpress') . '">' . __('Show all','teachpress') . '</a>';
+        $showall = '<a class="reset-filter" rel="nofollow" href="' . $settings['permalink'] . $settings['html_anchor'] . '" title="' . __('Reset Filter','teachpress') . '">' . __('Show all','teachpress') . '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 17 17"><g id="close-icon" fill="none" fill-rule="evenodd" stroke="#ffffff" stroke-linecap="square" stroke-width="2" transform="translate(1 1)"><path d="M13.7047304.461012519L.361383453 13.8043594M1.11619714.461012519L14.4595441 13.8043594"/></g></svg></a>';
     }
 
 
@@ -1444,11 +1446,13 @@ $options .= $options_ten;
                     
 
         // return filter menu
-        $filter_entries = '<form method="POST">';
-        $filter_entries .= '<select name="all_entries" id="all_entries" onchange="teachpress_jumpMenu(' . "'" . 'parent' . "'" . ',this, ' . "'" . $settings['permalink'] . "'" . ')">';
+        $filter_entries = '<div class="filter-rapper">';
+        $filter_entries .= '<div class="hci-tp-filter"><select name="all_entries" id="all_entries" onchange="teachpress_jumpMenu(' . "'" . 'parent' . "'" . ',this, ' . "'" . $settings['permalink'] . "'" . ')">';
         $filter_entries .= $options;
-        $filter_entries .= '</select>';
-        $filter_entries .= '</form>';
+        $filter_entries .= '</select></div>';
+        $filter_entries .= '<div class="svg-rapper"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 15">
+                              <path id="arrow-down" fill="#9B9B9B" fill-rule="evenodd" d="M6.57188311,11.5010146 L6.57188311,0.912755869 L6.57188311,0 L8.42811689,0 L8.42811689,0.912755869 L8.42811689,11.5010146 L13.0302087,6.96182801 L13.6855256,6.31546856 L15,7.60441035 L14.3446831,8.2507698 L8.81063935,13.7091697 L8.81255408,13.7110582 L8.15627845,14.3545862 L7.50192034,15 L7.5,14.998117 L7.49807966,15 L6.84372155,14.3545862 L6.18744592,13.7110582 L6.18936065,13.7091697 L0.655316871,8.2507698 L-1.77635684e-15,7.60441035 L1.31447443,6.31546856 L1.9697913,6.96182801 L6.57188311,11.5010146 Z"/>
+                                </svg></div></div>';
         $filter .= $filter_entries;
     
     

@@ -1260,6 +1260,8 @@ function tplist_hci_shortcode($atts) {
         'maxsize' => intval($atts['maxsize']),
         'minsize' => intval($atts['minsize'])
     );
+
+
     
     $filter_parameter = array(
         'tag' => ( isset ($_GET['tgid']) && $_GET['tgid'] != '' ) ? intval($_GET['tgid']) : '',
@@ -1295,11 +1297,12 @@ function tplist_hci_shortcode($atts) {
        $filter_parameter['entries_per_page'] = htmlspecialchars($atts['entries_per_page']);
     } 
 
-    $link_attributes = 'tgid=' . '&amp;yr=' . $filter_parameter['year'] . '&amp;type=' . $filter_parameter['type'] . '&amp;entries=' . $filter_parameter['entries_per_page'] . $settings['html_anchor'];
+     $link_attributes = 'tgid=' . '&amp;yr=' . $filter_parameter['year'] . '&amp;type=' . $filter_parameter['type'] . '&amp;entries=' . $filter_parameter['entries_per_page'] . $settings['html_anchor'];
 
 $current = '';
 $options_all = '<option value="' . 'tgid=' . '&amp;yr=' . $filter_parameter['year'] . '&amp;type=' . $filter_parameter['type'] . '&amp;entries=' . 10000 . $settings['html_anchor'] . '">All entries</option>';
 $options_ten = '<option value="' . 'tgid=' . '&amp;yr=' . $filter_parameter['year'] . '&amp;type=' . $filter_parameter['type'] . '&amp;entries=' . 10 . $settings['html_anchor'] . '">10 entries per page</option>';
+   
    
       // Handle limits for pagination
     $form_limit = ( isset($_GET['limit']) ) ? intval($_GET['limit']) : '';
@@ -1307,10 +1310,10 @@ $options_ten = '<option value="' . 'tgid=' . '&amp;yr=' . $filter_parameter['yea
 
     if ($settings['entries_per_page'] == 0 || $settings['entries_per_page'] == 10000) {
         $settings['entries_per_page'] = 10000;
-        $current = 'selected="selected"';
     }
     elseif  ($settings['entries_per_page'] == 10){
         $settings['entries_per_page'] = 10;
+        $options_ten = '<option value="' . 'tgid=' . '&amp;yr=' . $filter_parameter['year'] . '&amp;type=' . $filter_parameter['type'] . '&amp;entries=' . 10 . $settings['html_anchor'] . '" selected="selected">10 entries per page</option>';
     }
     else {
         $settings['entries_per_page'] = 10000;

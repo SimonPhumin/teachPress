@@ -158,14 +158,22 @@ implements tp_publication_template {
 					$pub_content .= 'In ' . $interface->get_booktitle() . '. ';
 				}
 			}
+			$pub_content .= '</p>';
+			$pub_content .= '<p class="tp_pub_address">';
 			if ( $interface->get_address() != "" ) {
-				$pub_content .= $interface->get_address() . ': ';
+				$pub_content .= $interface->get_address();
+			}
+			else {
+				$pub_content .= $interface->get_address() . '.';
 			}
 			if ( $interface->get_publisher() != "" ) {
-				$pub_content .= $interface->get_publisher() . ', ';
+				$pub_content .= ': ' . $interface->get_publisher();
 			}
 			if ( $interface->get_pages() != "" ) {
-				$pub_content .= $interface->get_pages() . '.';
+				$pub_content .= ', ' . $interface->get_pages() . '.';
+			}
+			else {
+				$pub_content .= '.';
 			}
 			
 			$pub_content .= '</p>';

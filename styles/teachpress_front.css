@@ -56,12 +56,7 @@ input.tp_search_button {border: 1px solid silver; padding:3px 6px; font-size:0.9
 input.tp_search_button:hover {background:#ECECEC; color:#333333;}
 a.tp_search_reset {background:transparent; cursor:pointer; border:none; font-weight: bold; padding:3px 6px; text-decoration: none; font-size:13px; color:#000;}
 a.tp_search_reset:hover {color:red;}
-.tablenav {padding-top:5px; margin:6px 0 4px; height:30px; vertical-align:middle; width:100%;}
-.tablenav-pages {float:right;}
-.tablenav-pages span.inactive {border: 1px solid silver; padding:3px 6px; font-size:0.9em; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px; color:#CCCCCC; font-size:12px; }
-.tablenav .tablenav-pages a {border: 1px solid; padding:3px 6px; font-size:0.9em; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px; font-size:12px; font-weight:bold;}
-.tablenav .tablenav-pages a, .tablenav .tablenav-pages a:visited {border-color:silver; color:#333333; text-decoration:none;}
-.tablenav .tablenav-pages a:hover {background:#ECECEC; color:#333333;}
+
 
 /********************************************************************************************/
 /* publication lists for the following shortcodes: [tpcloud] [tplist] [tpsinlge] [tpsearch] */
@@ -73,7 +68,6 @@ td.tp_pub_number, td.tp_pub_number_simple {vertical-align: top; padding: 8px; bo
 .tp_close_menu {margin-top:1px; margin-bottom:1px;}
 .tp_close {cursor:pointer; font-weight: bold;}
 .tp_pub_link img {margin: 0; width: 17px; height: 17px; padding: 0 1px 0 1px; display: inline;}
-ul.tp_pub_list li {padding: 3px 0 3px 0; list-style: none;}
 a.tp_pub_list {padding: 5px 0 5px 22px; background: no-repeat 0 3px; background-size: 18px 18px;}
 a.tp_show {color: inherit;}
 a.tp_show_block {font-weight: bold; text-decoration: none;}

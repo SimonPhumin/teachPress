@@ -1344,7 +1344,7 @@ $options_ten = '<option value="' . 'tgid=' . '&amp;yr=' . $filter_parameter['yea
         $showall = '';
     }
     else {
-        $showall = '<a class="reset-filter" rel="nofollow" href="' . $settings['permalink'] . '&amp;entries=' . 10000 . $settings['html_anchor'] . '" title="' . __('Reset Filter','teachpress') . '">' . __('Reset Filter','teachpress') . '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 17 17"><g id="close-icon" fill="none" fill-rule="evenodd" stroke="#ffffff" stroke-linecap="square" stroke-width="2" transform="translate(1 1)"><path d="M13.7047304.461012519L.361383453 13.8043594M1.11619714.461012519L14.4595441 13.8043594"/></g></svg></a>';
+        $showall = '<a class="reset-filter" rel="nofollow" href="' . $settings['permalink'] . '&amp;entries=' . 10000 . $settings['html_anchor'] . '" title="' . __('Reset Filter','teachpress') . '">' . __('Reset Filter','teachpress') . '<span><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 17 17"><g id="close-icon" fill="none" fill-rule="evenodd" stroke="#ffffff" stroke-linecap="square" stroke-width="2" transform="translate(1 1)"><path d="M13.7047304.461012519L.361383453 13.8043594M1.11619714.461012519L14.4595441 13.8043594"/></g></svg></span></a>';
     }
 
 
@@ -1421,7 +1421,7 @@ $options .= $options_ten;
                     
 
         // return filter menu
-        $filter_entries = '<div class="hci-tp-filter"><select name="all_entries" id="all_entries" onchange="teachpress_jumpMenu(' . "'" . 'parent' . "'" . ',this, ' . "'" . $settings['permalink'] . "'" . ')">';
+        $filter_entries = '<div class="hci-tp-filter" id="no_entries"><select name="all_entries" id="all_entries" onchange="teachpress_jumpMenu(' . "'" . 'parent' . "'" . ',this, ' . "'" . $settings['permalink'] . "'" . ')">';
         $filter_entries .= $options;
         $filter_entries .= '</select>';
         $filter_entries .= '<span><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 15">
@@ -1467,7 +1467,7 @@ $options .= $options_ten;
 
     // If there are no publications
     else {
-        $part2 = '<div class="teachpress_list"><p class="teachpress_mistake">' . __('No publications matched your criteria.','teachpress') . '</p></div>';
+        $part2 = '<div class="teachpress_list"><p class="teachpress_mistake">' . __('No publications found.','teachpress') . '</p></div>';
     }
     
     // complete the header (tag cloud + filter) add Bootstrap col-12 to filter container
@@ -1829,7 +1829,7 @@ function tp_cloud_shortcode($atts) {
 }
 
 /** 
- * Shortcode for displaying apublication list without filters
+ * Shortcode for displaying a publication list without filters
  * 
  * possible values for $atts:
  *      user (STRING)               wp user IDs (separated by comma)

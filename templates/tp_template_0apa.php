@@ -189,7 +189,7 @@ implements tp_publication_template {
 			if ( $interface->get_pages() != "" ) {
 				$pub_content .= ', ' . $interface->get_pages();
 			}
-			if ($interface->get_publisher() != "" && $interface->get_address() != "" && $interface->get_pages() != "") {
+			if (($interface->get_publisher() != "" && $interface->get_address() != "" && $interface->get_pages() != "") || $interface->get_publisher() != "" && $interface->get_pages() != "")  {
 				$pub_content .= '.';
 			}
 			
@@ -311,11 +311,24 @@ implements tp_publication_template {
 					$pub_content .= 'In <em>' . $interface->get_booktitle() . '. </em>';
 				}
 			}
-			if ( $interface->get_address() != "" ) {
-				$pub_content .= $interface->get_address() . ': ';
+			if ($interface->get_address() != "" && $interface->get_publisher() == "" && $interface->get_pages() == ""){
+				$pub_content .= $interface->get_address() . '.';
 			}
-			if ( $interface->get_publisher() != "" ) {
-				$pub_content .= $interface->get_publisher() . '.';
+			else {
+				$pub_content .= $interface->get_address();
+			}
+
+			if ( $interface->get_publisher() != "" && $interface->get_address() != "") {
+				$pub_content .= ': ' . $interface->get_publisher();
+			}
+			else {
+				$pub_content .= '' . $interface->get_publisher();
+			}
+			if ( $interface->get_pages() != "" ) {
+				$pub_content .= ', ' . $interface->get_pages();
+			}
+			if ($interface->get_publisher() != "" && $interface->get_address() != "" && $interface->get_pages() != "") {
+				$pub_content .= '.';
 			}
 			
 		
@@ -344,16 +357,23 @@ implements tp_publication_template {
 					$pub_content .= 'In <em>' . $interface->get_booktitle() . '. </em>';
 				}
 			}
-			if ( $interface->get_address() != "" ) {
-				$pub_content .= $interface->get_address() . '';
-			}
-			if ( $interface->get_publisher() != "" ) {
-				$pub_content .= ': ' . $interface->get_publisher() . ', ';
-			}
-			if ( $interface->get_pages() != "" ) {
-				$pub_content .= ': ' . $interface->get_pages() . '.';
+			if ($interface->get_address() != "" && $interface->get_publisher() == "" && $interface->get_pages() == ""){
+				$pub_content .= $interface->get_address() . '.';
 			}
 			else {
+				$pub_content .= $interface->get_address();
+			}
+
+			if ( $interface->get_publisher() != "" && $interface->get_address() != "") {
+				$pub_content .= ': ' . $interface->get_publisher();
+			}
+			else {
+				$pub_content .= '' . $interface->get_publisher();
+			}
+			if ( $interface->get_pages() != "" ) {
+				$pub_content .= ', ' . $interface->get_pages();
+			}
+			if ($interface->get_publisher() != "" && $interface->get_address() != "" && $interface->get_pages() != "") {
 				$pub_content .= '.';
 			}
 			
@@ -409,14 +429,24 @@ implements tp_publication_template {
 					$pub_content .= 'In <em>' . $interface->get_booktitle() . '. </em>';
 				}
 			}
-			if ( $interface->get_address() != "" ) {
-				$pub_content .= $interface->get_address() . ': ';
+			if ($interface->get_address() != "" && $interface->get_publisher() == "" && $interface->get_pages() == ""){
+				$pub_content .= $interface->get_address() . '.';
 			}
-			if ( $interface->get_publisher() != "" ) {
-				$pub_content .= $interface->get_publisher() . ', ';
+			else {
+				$pub_content .= $interface->get_address();
+			}
+
+			if ( $interface->get_publisher() != "" && $interface->get_address() != "") {
+				$pub_content .= ': ' . $interface->get_publisher();
+			}
+			else {
+				$pub_content .= '' . $interface->get_publisher();
 			}
 			if ( $interface->get_pages() != "" ) {
-				$pub_content .= $interface->get_pages() . '.';
+				$pub_content .= ', ' . $interface->get_pages();
+			}
+			if ($interface->get_publisher() != "" && $interface->get_address() != "" && $interface->get_pages() != "") {
+				$pub_content .= '.';
 			}
 			
 			

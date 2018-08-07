@@ -1,9 +1,9 @@
 === teachPress ===
-Contributors: Michael Winkler
-Tags: publications, enrollments, education, courses, BibTeX, bibliography
+Contributors: Michael Winkler, Simon Phumin Schweikert
+Tags: publications, enrollments, education, courses, BibTeX, bibliography, APA, Harvard
 License: GPLv2 or later
 Requires at least: 3.9
-Tested up to: 4.9.4
+Tested up to: 4.9.8
 Requires PHP: 5.3
 Stable tag: 6.2.4
 
@@ -11,6 +11,7 @@ Manage your courses and publications with teachPress
 
 == Description ==
 This plugin unites a course management system (with modules for enrollments, documents and assessments) and a powerful BibTeX compatible publication management. Both modules can be operated independently. teachPress is optimized for the needs of professorships and research groups. You can use it with WordPress 3.9.0 or higher.
+This forked version of teachPress has been modified in order to use APA citation and the ability to choose the number of entries for a publication list.
 
 = Features: =
 * BibTeX compatible multi user publication management

@@ -3,7 +3,6 @@
  * This file contains the external class PARSEENTRIES of bibtexParse / WIKINDX4
  * @package teachpress\includes\bibtexParse
  */
-
 /*
 
 Inspired by an awk BibTeX parser written by Nelson H. F. Beebe over 20 years ago although 
@@ -114,8 +113,9 @@ class PARSEENTRIES {
 
             if ( strpos($line_array[$i], '@') === false &&  // No '@' in the line
                  strpos($line_array[$i], '=') === false &&  // No '=' in the line
-                 $line_before !== '},' &&                   // No '},' at the end of the line before
-                 $line_array[$i][0] !== '}'                 // No '}' at the beginning of the line
+                 $line_before !== '},' //&&                    No '},' at the end of the line before
+                 //Import-Error HCI-Group
+                 /*$line_array[$i][0] !== '}'                 No '}' at the beginning of the line*/
                 ) {
                 $line_array[$i] = '<LineBreak>' . $line_array[$i];
             }
@@ -167,8 +167,36 @@ class PARSEENTRIES {
     function closeBib() {
         fclose($this->fid);
     }
-    
+    //-------------------------------------------------------------------
     /**
+     * Get a non-empty line from the bib file or from the bibtexString
+     * 
+     * @return boolean
+     
+    function getLine() {
+        if($this->parseFile) {
+            if(!feof($this->fid)){
+                do {
+                    //HCI-Group ERROR BibTex Import
+                    $line = trim(fgets($this->fid));
+                }
+                while(!feof($this->fid) && !$line);
+                return $line;
+            }
+            return FALSE;
+        }
+        else {
+            do {
+                $line = trim($this->bibtexString[$this->currentLine]);
+                $this->currentLine++;
+            }
+            while($this->currentLine < count($this->bibtexString) && !$line);
+            return $line;
+        }
+    }*/
+    //-------------------------------------------------------------------
+
+      /**
      * Get a non-empty line from the bib file or from the bibtexString
      * 
      * @return boolean
@@ -177,6 +205,7 @@ class PARSEENTRIES {
         if($this->parseFile) {
             if(!feof($this->fid)){
                 do {
+                    //HCI-Group ERROR BibTex Import
                     $line = trim(fgets($this->fid));
                 }
                 while(!feof($this->fid) && !$line);

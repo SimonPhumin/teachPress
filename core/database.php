@@ -1713,8 +1713,8 @@ class tp_publications {
             $sql = "SELECT COUNT( DISTINCT pub_id ) AS `count` FROM ( $select $join $where $having) p ";
         }
         
-        // print_r($args);
-        // get_tp_message($sql,'red');
+        //print_r($args);
+        //get_tp_message($sql,'red');
         $sql = ( $count != true ) ? $wpdb->get_results($sql, $output_type): $wpdb->get_var($sql);
         return $sql;
     }

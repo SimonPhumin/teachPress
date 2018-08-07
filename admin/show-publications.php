@@ -38,6 +38,7 @@ function tp_show_publications_page_help () {
                         <p>' . __('You can use publications in a page or article with the following shortcodes:','teachpress') . '</p>
                         <p>' . __('For a single publication:','teachpress') .  '<strong>[tpsingle]</strong></p>
                         <p>' . __('For a publication list with tag cloud:','teachpress') . ' <strong>[tpcloud]</strong></p>
+                         <p>' . __('For a publication list with a type and year filter and the ability to choose the no. of entries per page -> 10 per page / All entries:','teachpress') . ' <strong>[tplist_hci]</strong></p>
                         <p>' . __('For normal publication lists:','teachpress') . ' <strong>[tplist]</strong></p>
                         <p>' . __('For a publication list with type, year and no. of entries filter (HCI-Group):','teachpress') . ' <strong>[tplist_hci]</strong></p>
                         <p><strong>' . __('More information','teachpress') . '</strong></p>
@@ -111,7 +112,20 @@ function tp_show_publications_page() {
                 tp_bookmarks::add_bookmark( $array_variables['checkbox'][$i], $current_user->ID );
             }
         }
-        get_tp_message( __('Publications added','teachpress') );
+        get_tp_message( __('Publications added to your list','teachpress') );
+    }
+
+     // Remove one or multiple publications from a users list
+    if ( $array_variables['action'] === 'rem_list' ) {
+        $max = count( $array_variables['checkbox'] );
+        for( $i = 0; $i < $max; $i++ ) {
+            $array_variables['checkbox'][$i] = intval($array_variables['checkbox'][$i]);
+            $userbookmark = tp_bookmarks::bookmark_exists($array_variables['checkbox'][$i], $current_user->ID);
+            //if ( $userbookmark === false ) {
+                tp_bookmarks::delete_bookmark( $array_variables['checkbox'][$i], $current_user->ID );
+            //}
+        }
+        get_tp_message( __('Publications removed from your list','teachpress') );
     }
     
     // delete publications - part 2
@@ -486,6 +500,9 @@ class tp_publications_page {
                  <option value="bibtex"><?php _e('Show as BibTeX entry','teachpress'); ?></option>
                  <?php if ($array_variables['page'] === 'publications.php') {?>
                  <option value="add_list"><?php _e('Add to your own list','teachpress'); ?></option>
+                  <?php /* remove from your own list ---------------------------------------------*/ ?>
+                 <option value="rem_list"><?php _e('Remove from your own list','teachpress'); ?></option>
+                 <?php /* remove from your own list end-------------------------------------------*/ ?>
                  <option value="delete"><?php _e('Delete','teachpress'); ?></option>
                  <?php } ?>
               </select>

@@ -188,7 +188,7 @@ function tp_add_publication_page() {
     echo '<div class="tp_postcontent_right">';
     tp_publication_page::get_boobmarks_box ($pub_id, $user);
     tp_publication_page::get_tags_box ($pub_id);
-    tp_publication_page::get_image_box ($pub_data);
+    //tp_publication_page::get_image_box ($pub_data);
     echo '</div>';
     
     echo '</form>';
@@ -197,7 +197,7 @@ function tp_add_publication_page() {
 }
 
 /**
- * This class contains all funcitons for the add_publication_page
+ * This class contains all functions for the add_publication_page
  * @package teachpress\admin\publications
  * @since 5.0.0
  */
@@ -348,7 +348,7 @@ class tp_publication_page {
      * Gets the image box
      * @param array $pub_data   An associative array with publication data
      * @since 5.0.0
-     */
+     
     public static function get_image_box ($pub_data) {
         ?>
         <div class="postbox">
@@ -378,7 +378,7 @@ class tp_publication_page {
               </div>
           </div>
         <?php
-    }
+    }*/
     
     /**
      * Gets the main box
@@ -471,7 +471,7 @@ class tp_publication_page {
         <div id="div_url">
            <p style="margin-bottom:0;"><label for="url" title="<?php _e('URL/Files', 'teachpress'); ?>"><strong><?php _e('URL/Files', 'teachpress'); ?></strong></label></p>
            <input name="upload_mode" id="upload_mode" type="hidden" value="" />
-           <a class="upload_button" style="cursor:pointer; border:none; float:right; padding-right: 34px;" title="<?php _e('Insert a file from the WordPress Media Library','teachpress'); ?>"><?php _e('Add/Upload','teachpress'); ?> <img src="images/media-button-other.gif"/></a>
+           <a class="upload_button" style="cursor:pointer; border:none; float:right; padding-right: 34px;" title="<?php _e('Insert a file from the WordPress Media Library. Important: Put each file-link in a new line.','teachpress'); ?>"><?php _e('Add/Upload','teachpress'); ?> <img src="images/media-button-other.gif"/></a>
            <textarea name="url" type="text" id="url" class="upload" title="<?php echo __('You can add one URL or file per line. Insert the name of the URL/file behind the address and separate it by a comma and a space. Example:', 'teachpress') . ' http://mywebsite.com/docs/readme.pdf, Basic Instructions'; ?>" style="width:95%" rows="4" tabindex="30"><?php echo $pub_data["url"]; ?></textarea>
         </div>
            

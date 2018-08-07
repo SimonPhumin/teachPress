@@ -1,7 +1,7 @@
 // teachPress javascript for the admin menu
 
 /**
- * Delele node
+ * Delete node
  * @param {type} id
  * @since 5.0.0
  */

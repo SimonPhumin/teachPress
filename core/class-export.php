@@ -201,6 +201,12 @@ class tp_export {
         if ( $format === 'rtf' ) {
             echo self::rtf($row);
         }
+        /*--------------------------------------
+        Export Publications as APA (HCI-Group THB Custom Function)
+        */
+        if ( $format === 'APA' ) {
+                echo 'APA-Test';
+            }
     }
     
     /**
@@ -222,6 +228,12 @@ class tp_export {
         if ( $format === 'rtf' ) {
             echo self::rtf($row);
         }
+         /*--------------------------------------
+        Export Publications as APA (HCI-Group THB Custom Function)
+        */
+        if ( $format === 'APA' ) {
+                echo 'APA-Test';
+            }
     }
 
 

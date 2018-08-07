@@ -4,18 +4,18 @@ Plugin Name: teachPress
 Plugin URI: http://mtrv.wordpress.com/teachpress/
 Description: With teachPress you can easy manage courses, enrollments and publications.
 Version: 6.2.4
-Author: Michael Winkler
+Author: Michael Winkler, Simon Phumin Schweikert
 Author URI: http://mtrv.wordpress.com/
 Min WP Version: 3.9
-Max WP Version: 4.9.5
+Max WP Version: 4.9.8
 Text Domain: teachpress
 Domain Path: /languages
-GitHub Plugin URI: https://github.com/winkm89/teachPress
+GitHub Plugin URI: https://github.com/SimonPhumin/teachpress-apa
 GitHub Branch: master
  */
 
 /*
-LICENCE
+LICENSE
 
 Copyright 2008-2018 Michael Winkler
 
@@ -261,11 +261,14 @@ function get_pub_tag_list()
 {
     // List of publication tags
     $pub_tag_list = array();
+    $pub_tag_name = array();
+    $pub_tag_id = array();
     $pub_tags  = tp_tags::get_tags();
+
     foreach ($pub_tags as $pub_tag) {
-        $pub_tag_list[] = array('text' => $pub_tag->name, 'value' => intval($pub_tag->tag_id));
-        echo $pub_tag->tag_id;
+        $pub_tag_list[] = $pub_tag->tag_id . '-' . $pub_tag->name;  
     }
+    $pub_tag_list = array_unique ( $pub_tag_list );
     return $pub_tag_list;
 }
 

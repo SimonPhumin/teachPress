@@ -380,6 +380,7 @@ function teachpress_publicationFields(mode) {
  * Make it possible to use the wordpress media uploader
  */
 jQuery(document).ready(function() {
+
     var uploadID = '';
     var old = '';
     jQuery('.upload_button').click(function() {
@@ -397,6 +398,7 @@ jQuery(document).ready(function() {
         tb_show('', 'media-upload.php?type=image&amp;TB_iframe=true');
         return false;
     });
+
 
     window.send_to_editor = function(html) {
         var imgurl = jQuery('img',html).attr('src');
@@ -432,3 +434,13 @@ jQuery(document).ready(function() {
         tb_remove();
     };
 });
+
+  /*jQuery(document).ready(function(html) {
+    var $button = $('.button');
+            // Change the text on the media uploader insert
+    var $button_content = 'Insert into Publication';
+            if($button.attr("Insert into Post")){
+                var $thisbutton = $(this);
+                $thisbutton.html($button_content);
+            }
+    });*/

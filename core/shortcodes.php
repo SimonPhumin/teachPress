@@ -2134,10 +2134,10 @@ function tp_search_shortcode ($atts) {
     $r .= '<div class="tp_search_input">';
     
     if ( $search != "" ) {
-        $r .= '<a name="tps_reset" class="tp_search_reset" title="' . __('Reset', 'teachpress') . '" href="' . get_permalink() . '">X</a>';
+        $r .= '<a name="tps_reset" class="tp_search_reset" title="' . __('Reset', 'teachpress') . '" href="' . get_permalink() . '">Reset Search</a>';
     }
-    // If someone wants a form reset instead of a full reset:
-    // $r .= '<a name="tps_reset" class="tp_search_reset" title="' . __('Reset', 'teachpress') . '" onclick="teachpress_tp_search_clean();">X</a>';
+    //If someone wants a form reset instead of a full reset:
+    /*$r .= '<a name="tps_reset" class="tp_search_reset" title="' . __('Reset', 'teachpress') . '" onclick="teachpress_tp_search_clean();">X</a>';*/
     
     $r .= '<input name="tps" id="tp_search_input_field" type="search" value="' . stripslashes($search) . '" tabindex="1" size="40"/>';
     $r .= '<input name="tps_button" class="tp_search_button" type="submit" value="' . __('Search', 'teachpress') . '"/>';
@@ -2171,10 +2171,10 @@ function tp_search_shortcode ($atts) {
                                'mode' => 'bottom',
                                'before' => '<div class="tablenav">',
                                'after' => '</div>'));
-    if ( $search != "" ) {
+    /*if ( $search != "" ) {
         $r .= '<h3 class="tp_search_result">' . __('Results for','teachpress') . ' "' . stripslashes($search) . '":</h3>';
-    }
-    $r .= $menu;
+    }*/
+    //$r .= $menu;
 
     // Load template
     $template = tp_load_template($settings['template']);
@@ -2184,7 +2184,7 @@ function tp_search_shortcode ($atts) {
 
     // If there are no results
     if ( count($results) === 0 ) {
-        $r .= '<div class="teachpress_message_error">' . __('Sorry, no entries matched your criteria.','teachpress') . '</div>';
+        $r .= '<div class="teachpress_message_error">' . __('No publications found.','teachpress') . '</div>';
     }
     // Show results
     else {

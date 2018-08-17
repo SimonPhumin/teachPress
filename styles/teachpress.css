@@ -84,3 +84,16 @@ a.tp_file_view {text-decoration: none;}
     .tp_postcontent {width: 100%;}
     .tp_postcontent_right {width: 100%; margin-right: 0;}
 }
+/* Apa-Export */
+.apa-export {
+ background: #fff;
+padding: 5px 20px;
+margin-bottom: 15px;
+}
+.apa-export p {
+	padding-bottom: 10px;
+	border-bottom: 1px solid #ccc;
+}
+.apa-export p:last-child {
+	border-bottom: none;
+}

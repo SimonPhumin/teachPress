@@ -148,13 +148,8 @@ function tp_show_publications_page() {
     if ( $array_variables['action'] === 'bibtex' ) {
         tp_publications_page::get_bibtex_screen($array_variables);
     }
-    else {
-        tp_publications_page::get_tab($user, $array_variables);
-    }
-
-    // Show page
-    if ( $array_variables['action'] === 'apa' ) {
-        tp_publications_page::get_bibtex_screen($array_variables);
+    elseif ( $array_variables['action'] === 'apa' ) {
+        tp_publications_page::get_apa_screen($array_variables);
     }
     else {
         tp_publications_page::get_tab($user, $array_variables);
@@ -171,12 +166,57 @@ function tp_show_publications_page() {
 class tp_publications_page {
 
   /**
-     * APA-Export mode for show publications page
+     * APA-Style Export mode for show publications page
      * @param array $array_variables
      * @since 5.0.0
      */
     public static function get_apa_screen($array_variables) {
-        echo 'This is the new APA-Export function';
+        $convert_apa = ( get_tp_option('convert_apa') == '1' ) ? true : false;
+        $sel = '';
+        echo '<h2>' . __('APA-Style Export','teachpress') . '</h2>';
+        echo '<form name="form1">';
+        echo '<p><a href="admin.php?page=' . $array_variables['page'] . '&amp;search=' . $array_variables['search'] . '&amp;limit=' . $array_variables['curr_page'] . '" class="button-secondary">&larr; ' . __('Back','teachpress') . '</a></p>';
+                  echo '</form>';
+        if ( $array_variables['checkbox'] != '' ) {
+            $max = count ($array_variables['checkbox']);
+            echo '<div class="apa-export">';
+            for ($i=0; $i < $max; $i++) {
+                $pub = intval($array_variables['checkbox'][$i]);
+                $row = tp_publications::get_publication( $pub, ARRAY_A );
+                $tags = tp_tags::get_tags( array('output_type' => ARRAY_A, 'pub_id' => $pub) );
+                echo '<p>';
+                echo tp_apa::get_single_publication_apa($row, $tags, $convert_apa);
+                echo '</p>';
+                $sel = ( $sel !== '' ) ? $sel . ',' . $pub : $pub;
+            }
+             echo '</div>';
+        }
+        else {
+            $row = tp_publications::get_publications( array('output_type' => ARRAY_A) );
+            echo '<div class="apa-export">';
+            foreach ( $row as $row ) {
+                $tags = tp_tags::get_tags( array('output_type' => ARRAY_A, 'pub_id' => $row['pub_id']) );
+                echo '<p>';
+                echo tp_apa::get_single_publication_apa($row, $tags, $convert_apa);
+                echo '</p>';
+            }
+            echo '</div>';
+        }
+
+
+        echo '<script type="text/javascript">
+               document.form1.bibtex_area.focus();
+               document.form1.bibtex_area.select();
+               </script>';
+        if ( $sel != '' ) {
+            echo '<form id="tp_export" method="get" action="' . home_url() . '">';
+            echo '<input type="hidden" name="tp_sel" value="' . $sel . '"/>';
+            echo '<input type="hidden" name="tp_format" value="txt"/>';
+            echo '<input type="hidden" name="type" value="pub"/>';
+            echo '<input type="hidden" name="feed" value="tp_export"/>';
+            echo '<input type="submit" name="tp_submit" class="button-primary" value="' . __('Export','teachpress') . ' (.txt)"/>';
+            echo '</form>';
+        }
     }
     
     /**
@@ -530,6 +570,7 @@ class tp_publications_page {
                  <option value="0">- <?php _e('Bulk actions','teachpress'); ?> -</option>
                  <option value="edit"><?php _e('Edit','teachpress'); ?></option>
                  <option value="bibtex"><?php _e('Show as BibTeX entry','teachpress'); ?></option>
+                 <option value="apa"><?php _e('Show as APA-Style','teachpress'); ?></option>
                  <?php if ($array_variables['page'] === 'publications.php') {?>
                  <option value="add_list"><?php _e('Add to your own list','teachpress'); ?></option>
                   <?php /* remove from your own list ---------------------------------------------*/ ?>

@@ -141,14 +141,6 @@ function tp_add_publication_page() {
             get_tp_message( __('Please check the format of author/editor information and correct it to the following format: firstname1 lastname1 and firstname2 lastname 2. Example: Adam Smith and John M. Keynes','teachpress') , 'orange');
         }
     }
-
-    /*
-     * Disabled since tp 6.0
-    if ( $pub_id != 0 && !isset($_POST['create_pub']) ) {
-        echo '<p style="margin-bottom:0px;"><a href="admin.php?page=publications.php&amp;search=' . $search . '&amp;filter=' .  $filter . '&amp;limit=' . $entry_limit . '&amp;tag=' . $tag_id . '&amp;year=' . $year . '" class="button-secondary" title="' . __('Back','teachpress') . '">&larr; ' . __("Back",'teachpress') . '</a></p>';
-    }
-     * 
-     */
     
     // input fields
     echo '<input name="page" type="hidden" value="teachpress/addpublications.php">';

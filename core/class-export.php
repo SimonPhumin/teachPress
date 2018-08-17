@@ -204,8 +204,8 @@ class tp_export {
         /*--------------------------------------
         Export Publications as APA (HCI-Group THB Custom Function)
         */
-        if ( $format === 'APA' ) {
-                echo 'APA-Test';
+        if ( $format === 'txt' ) {
+                echo self::txt($row);
             }
     }
     
@@ -228,12 +228,9 @@ class tp_export {
         if ( $format === 'rtf' ) {
             echo self::rtf($row);
         }
-         /*--------------------------------------
-        Export Publications as APA (HCI-Group THB Custom Function)
-        */
-        if ( $format === 'APA' ) {
-                echo 'APA-Test';
-            }
+             if ( $format === 'txt' ) {
+            echo self::txt($row);
+        }
     }
 
 
@@ -253,7 +250,7 @@ class tp_export {
      * Generate rtf document format
      * @param array $row
      * @return string
-     * @since 3.0.0
+     * @since 6.2.4
      * @access private
      */
     private static function rtf ($row) {
@@ -264,6 +261,22 @@ class tp_export {
         }
         $foot = '}';
         return $head . $line . $foot;
+    }
+
+     /**
+     * Generate txt document format
+     * @param array $row
+     * @return string
+     * @since 3.0.0
+     * @access private
+     */
+    private static function txt ($row) {
+        //$head = '\txt1';
+        $line = '';
+        foreach ($row as $row) {
+            $line .= self::txt_row($row) . '\par'. '\par';
+        }
+        return $line;
     }
 
     /**

@@ -369,6 +369,8 @@ if (is_admin()) {
 include_once "core/admin.php";
 include_once "core/class-ajax.php";
 include_once "core/class-bibtex.php";
+/*add APA-Style-Export*/
+include_once "core/class-apa.php";
 include_once "core/class-bibtex-import.php";
 include_once "core/class-bibtex-macros.php";
 include_once "core/class-cite-object.php";

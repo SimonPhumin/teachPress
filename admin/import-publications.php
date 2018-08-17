@@ -302,8 +302,7 @@ class tp_import_publication_page {
                     <select name="tp_format" id="tp_format">
                         <option value="bib">BibTeX (.bib)</option>
                         <option value="txt">BibTeX (.txt)</option>
-                        <option value="rss">RSS (2.0)</option>
-                        <option value="rtf">RTF</option>
+                        <option value="rtf">APA-Style (.txt)</option>
                     </select>
                 </td>
             </tr>

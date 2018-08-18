@@ -12,6 +12,17 @@ function teachpress_del_node(id){
 }
 
 /**
+ * Toggle node
+ * @param {type} id
+ * @since 5.0.0
+ */
+function teachpress_toggle_node(id){
+    jQuery(document).ready(function($) {
+        $(id).toggle();
+    });
+}
+
+/**
  * for selecting all checkboxes on an admin page
  * @param {string} element_names
  * @param {string} checkbox_id

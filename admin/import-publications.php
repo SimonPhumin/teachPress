@@ -135,7 +135,7 @@ class tp_import_publication_page {
                 'overwrite' => isset( $post['overwrite']) ? true : false
             );
 
-            // echo $bibtex;
+            //echo $bibtex;
             // add publications to database
             $entries = tp_bibtex_import::init($bibtex, $settings);
         }

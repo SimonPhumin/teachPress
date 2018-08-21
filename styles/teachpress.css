@@ -84,6 +84,13 @@ a.tp_file_view {text-decoration: none;}
     .tp_postcontent {width: 100%;}
     .tp_postcontent_right {width: 100%; margin-right: 0;}
 }
+
+
+/*Table-Nav Admin*/
+.tablenav-pages a svg{
+	padding-top: 5px;
+height: 10px;
+}
 /* Apa-Export */
 .apa-export {
  background: #fff;

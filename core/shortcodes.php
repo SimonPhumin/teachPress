@@ -1470,8 +1470,12 @@ $options .= $options_ten;
     }
     
     // complete the header (tag cloud + filter) add Bootstrap col-12 to filter container
-    $part1 = '<div class="row teachpress_filter">' . $filter . $showall .  '</div>';
-
+    if ($number_entries > 10){
+        $part1 = '<div class="row teachpress_filter">' . $filter . $showall .  '</div>';
+        }
+    else {
+        $part1 = '';
+    }
     // Return
     return $part1 . $part2;
 }

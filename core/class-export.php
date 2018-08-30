@@ -263,21 +263,6 @@ class tp_export {
         return $head . $line . $foot;
     }
 
-     /**
-     * Generate txt document format
-     * @param array $row
-     * @return string
-     * @since 3.0.0
-     * @access private
-     */
-    private static function txt ($row) {
-        //$head = '\txt1';
-        $line = '';
-        foreach ($row as $row) {
-            $line .= self::txt_row($row) . '\par'. '\par';
-        }
-        return $line;
-    }
 
     /**
      * Returns a single line for rtf file
@@ -295,7 +280,7 @@ class tp_export {
             'use_span'          => false
         );
         if ( $row['type'] === 'collection' || $row['type'] === 'periodical' || ( $row['author'] === '' && $row['editor'] !== '' ) ) {
-            $all_authors = tp_bibtex::parse_author($row['editor'], ';', $settings['editor_name'] ) . ' (' . __('Ed.','teachpress') . ')';
+            $all_authors = tp_bibtex::parse_author($row['editor'], ';', $settings['editor_name'] ) . ' (' . __('Eds.','teachpress') . ')';
         }
         else {
             $all_authors = tp_bibtex::parse_author($row['author'], ';', $settings['author_name'] );
@@ -306,6 +291,23 @@ class tp_export {
         $line = utf8_decode(self::decode($line));
         return $line;
     }
+  
+
+    /**
+     * Generate txt document format
+     * @param array $row
+     * @return string
+     * @since 3.0.0
+     * @access private
+     */
+    private static function txt ($row) {
+        //$head = '\txt1';
+        $line = '';
+        foreach ($row as $row) {
+            $line .= self::txt_row($row) . '\par'. '\par';
+        }
+        return $line;
+    }
     
     /**
      * Returns a single line for a utf8 encoded text
@@ -314,7 +316,7 @@ class tp_export {
      * @since 6.0.0
      * @access public
     */
-    public static function text_row ($row) {
+    public static function txt_row ($row) {
         $settings = array(
             'author_name'       => 'initials',
             'editor_name'       => 'initials',

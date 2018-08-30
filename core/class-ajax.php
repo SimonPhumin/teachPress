@@ -196,34 +196,6 @@ class tp_ajax {
     public static function get_generated_bibtex_key ($string) {
         echo tp_publications::generate_unique_bibtex_key($string);
     }
-
-    /**
-     * Gets the cite screen for a single publication.
-     * @param int $cite_id       The publication ID
-     * @since 6.0.0
-     * @access public
-     */
-    public static function get_cite_screen ($cite_id) {
-        $publication = tp_publications::get_publication($cite_id, ARRAY_A);
-        echo '<!doctype html>';
-        echo '<html>';
-        echo '<head>';
-        echo '<meta charset="utf-8">';
-	echo '<title>teachPress - cite publication</title>';
-        echo '</head>';
-        echo '<body>';
-        echo '<div id="content">';
-        echo '<div class="wrap">';
-        echo '<h3 class="nav-tab-wrapper"><a class="nav-tab nav-tab-active tp_cite_text" id="tp_cite_text_' . $cite_id . '" pub_id="' . $cite_id . '">' . __('Text','teachpress') . '</a> <a class="nav-tab tp_cite_bibtex" id="tp_cite_bibtex_' . $cite_id . '" pub_id="' . $cite_id . '">' . __('BibTeX','teachpress') . '</a></h3>';
-        echo '<form name="form_cite" method="post">';
-        echo '<input name="tp_cite_id" type="hidden" value="' . '"/>';
-        echo '<textarea name="tp_cite_full" id="tp_cite_full_' . $cite_id . '" class="tp_cite_full" rows="7" style="width:100%; border-top:none;">' . tp_export::text_row($publication) . '</textarea>';
-        echo '</form>';
-        echo '</div>';
-        echo '</div>';
-        echo '</body>';
-        echo '</html>';
-    }
     
     /**
      * Gets the cite text for a publication

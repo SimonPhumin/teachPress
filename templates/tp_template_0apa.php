@@ -44,8 +44,8 @@ class tp_template_0apa implements tp_publication_template
      */
     public function get_headline($content, $args = array())
     {
-    	if ($content == '0000' || $content == '9999') {
-    		 return '<div class="tp_headline_2 col-12"><h2 class="tp_h2" id="tp_h2_' . esc_attr($content) . '">Accepted</h2></div>';
+    	if ($content == '9999') {
+    		 return '<div class="tp_headline_2 col-12"><h2 class="tp_h2" id="tp_h2_' . esc_attr($content) . '">In Press</h2></div>';
     	}
     	else {
         return '<div class="tp_headline_2 col-12"><h2 class="tp_h2" id="tp_h2_' . esc_attr($content) . '">' . $content . '</h2></div>';
@@ -135,7 +135,7 @@ class tp_template_0apa implements tp_publication_template
             }
 
             if ($interface->get_address() != "" && $interface->get_publisher() == "" && $interface->get_pages() == "") {
-                $pub_content .= $interface->get_address() . '.';
+                $pub_content .= $interface->get_address() . ': ' . $interface->get_date_europ() . '.';
             } else {
                 $pub_content .= $interface->get_address();
             }

@@ -1,4 +1,6 @@
 <?php
+
+//error_reporting(E_ERROR | E_WARNING | E_PARSE);
 /**
  * This file contains all functions for sql calls
  * @package teachpress

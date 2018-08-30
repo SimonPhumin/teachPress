@@ -379,6 +379,8 @@ class tp_shortcodes {
         
     }
     
+  
+
     /**
      * Generates the list of publications for [tplist], [tpcloud], [tpsearch], [tplist_hci]
      * @param array $tparray    The array of publications
@@ -1399,7 +1401,7 @@ $options_ten = '<option value="' . 'tgid=' . '&amp;yr=' . $filter_parameter['yea
         $template = tp_load_template('tp_template_0apa');
     }
     
-    // Create array of publications
+    // Create array of publications with years
     foreach ($row as $row) {
         $number = tp_html_publication_template::prepare_publication_number($number_entries, $tpz, $pagination_limits['entry_limit'], $atts['style']);
         $tparray[$tpz][0] = $row['year'] ;
@@ -1412,6 +1414,7 @@ $options_ten = '<option value="' . 'tgid=' . '&amp;yr=' . $filter_parameter['yea
         }
         $tpz++;
     }
+    // Create array of publications with pubstatus 'forthcoming'
 
 
             
@@ -1460,6 +1463,7 @@ $options .= $options_ten;
                                'colspan' => $colspan,
                                'user' => $atts['user'],
                                'sort_list' => $settings['sort_list'] ) );
+
         $part2 .= $menu;
     }
 
@@ -1469,13 +1473,9 @@ $options .= $options_ten;
         $part2 = '<div class="teachpress_list"><p class="teachpress_mistake">' . __('No publications found.','teachpress') . '</p></div>';
     }
     
-    // complete the header (tag cloud + filter) add Bootstrap col-12 to filter container
-    if ($number_entries > 10){
-        $part1 = '<div class="row teachpress_filter">' . $filter . $showall .  '</div>';
-        }
-    else {
-        $part1 = '';
-    }
+    // complete the header (+ filter) container
+    $part1 = '<div class="row teachpress_filter">' . $filter . $showall .  '</div>';
+
     // Return
     return $part1 . $part2;
 }

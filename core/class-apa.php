@@ -31,11 +31,6 @@ class tp_apa
         $allbutlast_authors = tp_bibtex::parse_author($row['author'], ', ', 'initials');
         $all_authors = preg_replace('/,([^,]+,[^,]*)$/', ' & \1', $allbutlast_authors);
 
-        //parse editors
-        $allbutlast_editors = tp_bibtex::parse_editor($row['editor'], ', ', 'initials');
-
-       $all_editors = preg_replace('/(,(?!.*,.*))/', ' &', $allbutlast_editors);
-
         //apa output string start
         $apa_output .= $all_authors . ' (' . substr($row['date'], 0, 4) . '). ';
         // Journal Article
@@ -63,14 +58,14 @@ class tp_apa
             $apa_output .= $row['title'] . '. ';
 
             if ($row['booktitle'] != "") {
-                if ($all_editors != "" && $row['editor'] != " , .") {
-                    $apa_output .= 'In ' . $all_editors . ' (Eds.), ' . $row['booktitle'] . '. ';
+                if ($row['editor'] != "" && $row['editor'] != " , .") {
+                    $apa_output .= 'In ' . $row['editor'] . ' (Eds.), ' . $row['booktitle'] . '. ';
                 } else {
                     $apa_output .= 'In ' . $row['booktitle'] . '. ';
                 }
             }
             if ($row['address'] != "" && $row['publisher'] == "" && $row['pages'] == "") {
-                $apa_output .= $row['address'] . ': ' . $row['date'] . '.';
+                $apa_output .= $row['address'] . '.';
             } else {
                 $apa_output .= $row['address'];
             }
@@ -81,7 +76,7 @@ class tp_apa
                 $apa_output .= $row['publisher'];
             }
             if ($row['pages'] != "") {
-                $apa_output .= ', ' . 'pp. ' . $row['pages'];
+                $apa_output .= ', ' . $row['pages'];
             }
             if ($row['publisher'] != "" && $row['address'] != "" && $row['pages'] != "") {
                 $apa_output .= '.';
@@ -105,8 +100,8 @@ class tp_apa
             $apa_output .= $row['title'] . '. ';
 
             if ($row['booktitle'] != "") {
-                if ($all_editors != "" && $all_editors != " , .") {
-                    $apa_output .= 'In ' . $all_editors . ' (Eds.), ' . $row['booktitle'] . '. ';
+                if ($row['editor'] != "" && $row['editor'] != " , .") {
+                    $apa_output .= 'In ' . $row['editor'] . ' (Eds.), ' . $row['booktitle'] . '. ';
                 } else {
                     $apa_output .= 'In ' . $row['booktitle'] . '. ';
                 }
@@ -123,7 +118,7 @@ class tp_apa
                 $apa_output .= $row['publisher'];
             }
             if ($row['pages'] != "") {
-                $apa_output .= ', ' . 'pp. ' . $row['pages'];
+                $apa_output .= ', ' . $row['pages'];
             }
             if ($row['publisher'] != "" && $row['address'] != "" && $row['pages'] != "") {
                 $apa_output .= '.';
@@ -174,8 +169,8 @@ class tp_apa
             $apa_output .= $row['title'] . '. ';
 
             if ($row['booktitle'] != "") {
-                if ($all_editors != "" && $all_editors != " , .") {
-                    $apa_output .= 'In ' . $all_editors . ' (Eds.), ' . $row['booktitle'] . '. ';
+                if ($row['editor'] != "" && $row['editor'] != " , .") {
+                    $apa_output .= 'In ' . $row['editor'] . ' (Eds.), ' . $row['booktitle'] . '. ';
                 } else {
                     $apa_output .= 'In ' . $row['booktitle'] . '. ';
                 }

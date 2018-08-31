@@ -51,19 +51,11 @@ class tp_bibtex {
             if ( $pub_fields[$i] === 'isbn' ) {
                 $string .= $isbn_label . ' = {' . $row[$pub_fields[$i]] . '},' . chr(13) . chr(10);
             }
-            // year = 9999
+            // year
             elseif ( $pub_fields[$i] === 'date' ) {
-                if ( $row['status'] == 'fortchcoming' && $row['date'] == '0000-00-00' ){
-                $string .= 'year  = {In Press},'. chr(13) . chr(10);
-                $string .= 'date = {In Press}, '. chr(13) . chr(10);
-                }
-                else {
                 $string .= 'year  = {' . $row['year'] . '},' . chr(13) . chr(10);
-                $string .= tp_bibtex::prepare_bibtex_line($row[$pub_fields[$i]],$pub_fields[$i]); 
-                }
-                
+                $string .= tp_bibtex::prepare_bibtex_line($row[$pub_fields[$i]],$pub_fields[$i]);
             }
-            
             // techtype
             elseif ( $pub_fields[$i] === 'techtype' ) {
                 $string .= 'type = {' . $row[$pub_fields[$i]] . '},' . chr(13) . chr(10);
@@ -505,6 +497,39 @@ class tp_bibtex {
         return $all_authors;
     }
     
+    /**
+     * This is the original (deprecated) parsing function for author names
+     * 
+     * Some examples for the parsing:
+     * Adolf F. Weinhold and Ludwig van Beethoven --> Weinhold, Adolf F.; van Beethoven, Ludwig
+     * 
+     * @param string $input     The input string
+     * @param string $separator The separator between the authors (for the output)
+     * @return string
+     * @since 5.0.0
+     * @access public
+     */
+    public static function parse_author_deprecated ($input, $separator = ';') {
+        $all_authors = '';
+        $one_author = '';
+        $array = explode(" and ",$input);
+        $lenth = count ($array);
+        for ( $i = 0; $i < $lenth; $i++ ) {
+            $array[$i] = trim($array[$i]);
+            $names = explode(" ",$array[$i]);
+            $lenth2 = count($names);
+            for ( $j = 0; $j < $lenth2 - 1; $j++ ) {
+                $one_author .= ' ' . trim( $names[$j] );
+            }
+            $one_author = trim( $names[$lenth2 - 1] ). ', ' . $one_author;
+            $all_authors = $all_authors . $one_author;
+            if ( $i < $lenth - 1 ) {
+                $all_authors .= $separator . ' ';
+            }
+            $one_author = '';
+        }
+        return $all_authors;
+    }
     
     /**
      * This is the simple parsing function which just replaces the "and" with ","

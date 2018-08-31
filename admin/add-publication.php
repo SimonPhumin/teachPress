@@ -50,15 +50,12 @@ function tp_add_publication_page() {
     $data['isbn'] = isset( $_POST['isbn'] ) ? htmlspecialchars($_POST['isbn']) : '';
     $data['url'] = isset( $_POST['url'] ) ? htmlspecialchars($_POST['url']) : '';
 
-
-$data['date'] = isset( $_POST['date'] ) ? htmlspecialchars($_POST['date']) : '';
-    /* if (isset( $_POST['date'] ) == '0000-00-00') {
-        $data['date'] = 'Accepted-00-00';
-        $data['year'] = 'Accepted';
+    if (isset( $_POST['date'] ) == '0000-00-00') {
+        $data['date'] = 'Accepted';
     }
     else {
         $data['date'] = isset( $_POST['date'] ) ? htmlspecialchars($_POST['date']) : '';
-    }*/
+    }
 
     //$data['date'] = isset( $_POST['date'] ) ? htmlspecialchars($_POST['date']) : '';
 

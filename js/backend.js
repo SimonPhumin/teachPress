@@ -446,4 +446,12 @@ jQuery(document).ready(function() {
     };
 });
 
-
+  /*jQuery(document).ready(function(html) {
+    var $button = $('.button');
+            // Change the text on the media uploader insert
+    var $button_content = 'Insert into Publication';
+            if($button.attr("Insert into Post")){
+                var $thisbutton = $(this);
+                $thisbutton.html($button_content);
+            }
+    });*/

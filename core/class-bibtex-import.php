@@ -1,6 +1,4 @@
 <?php
-
-//error_reporting(E_ERROR | E_WARNING | E_PARSE);
 /**
  * This file contains all functions which are used for a bibtex import
  * @package teachpress\core\bibtex
@@ -55,19 +53,9 @@ class tp_bibtex_import {
             $entries[$i]['journal'] = array_key_exists('journal', $entries[$i]) === true ? $entries[$i]['journal'] : '';
             $entries[$i]['import_id'] = $import_id;
             
+            // for the date of publishing
+            $entries[$i]['date'] = self::set_date_of_publishing($entries[$i]);
             
-            // check if 'forthcoming' is selected and year is '0000'
-           /* if ( self::set_date_of_publishing($entries[$i]) == '' && ($entries[$i]['pubstate'] == '' || $entries[$i]['pubstate'] == 'forthcoming')) {
-                $entries[$i]['date'] == '9999-01-01';
-            }
-            elseif (self::set_date_of_publishing($entries[$i]) != '' && $entries[$i]['pubstate'] == 'forthcoming') {
-                $entries[$i]['date'] = '9999-01-01';
-            }
-            else {*/
-                // for the date of publishing
-                $entries[$i]['date'] = self::set_date_of_publishing($entries[$i]);
-            //}
-
             // for tags
             $tags = self::set_tags($entries[$i], $settings);
             
@@ -89,7 +77,7 @@ class tp_bibtex_import {
             // for author / editor
             $entries[$i]['author'] = tp_bibtex_import_author::init($entries[$i], 'author', $settings['author_format']);
             if ( $entries[$i]['editor'] != '' ) { 
-                $entries[$i]['editor'] = tp_bibtex_import_editor::init($entries[$i], 'editor', $settings['author_format']);
+                $entries[$i]['editor'] = tp_bibtex_import_author::init($entries[$i], 'editor', $settings['author_format']);
             }
             
             // for isbn/issn detection
@@ -174,7 +162,7 @@ class tp_bibtex_import {
     }
     
     /**
-     * This function is used for the import and sets the date of publishing for a publication.
+     * This function is used for the import and sets the date of publishing for a publications.
      * @param array $entry
      * @return string
      * @since 5.0.0
@@ -195,6 +183,7 @@ class tp_bibtex_import {
         elseif ($entry['month'] != '' && $entry['day'] != '' && $entry['year'] != '') {
             $entry['date'] = $entry['year'] . '-' . $entry['month'] . '-' . $entry['day'];
         }
+        // if year is given
         else {
             $entry['date'] = $entry['year'] . '-01-01';
         }
@@ -275,81 +264,6 @@ class tp_bibtex_import_author {
     private static function dynamic_mode ($entry, $key) {
         global $PARSECREATORS;
         $creator = new PARSECREATORS();
-        $creatorArray = $creator->parse( $entry[$key] );
-        // print_r($creatorArray);
-        $string = '';
-        foreach ($creatorArray as $singlecreator) {
-            $single = $singlecreator[0] . $singlecreator[1] . ' ' . $singlecreator[3] . ' ' .  $singlecreator[2];
-            $single = str_replace(array('   ','  '),array(' ', ' '), $single);
-            $string = ( $string == '' ) ? trim($single) : $string . ' and ' . trim($single);
-        }
-        return $string;
-    }
-    
-    /**
-     * This function is used for the format lastname1, firstname1 and lastname2, firstname2
-     * @param array $entry
-     * @param string $key
-     * @return string
-     * @since 6.0.0
-     * @access private
-     */
-    private static function lastname_first($entry, $key) {
-        $end = '';
-        $new = explode(' and ', $entry[$key] );
-        foreach ( $new as $new ) {
-            $parts = explode(',', $new); 
-            $num = count($parts); 
-            $one = ''; 
-            for ($j = 1; $j < $num; $j++) {
-                $parts[$j] = trim($parts[$j]);
-                $one .= ' '. $parts[$j];
-            }
-            $one .= ' ' . trim($parts[0]);
-            $end = ( $end != '' ) ? $end . ' and ' . $one : $one;
-        }
-        return $end;
-    }
-}
-
-/**
- * This class contains functions which are used for a editor name manipulation in bibtex imports
- * @package teachpress\core\bibtex
- * @since 6.0.0
- */
-class tp_bibtex_import_editor {
-    
-    /**
-     * Init function for importing/parsing an author/editor
-     * @param array $entry      The entry array
-     * @param string $key       author or editor 
-     * @param string $mode      default, dynamic or lastfirst
-     * @return string
-     */
-    public static function init ($entry, $key, $mode) {
-        if ( $mode === 'lastfirst' ) {
-            return self::lastname_first($entry, $key);
-        }
-        else if ( $mode === 'dynamic'  ) {
-            return self::dynamic_mode($entry, $key);
-        }
-        else {
-            return $entry[$key];
-        }
-    }
-    
-    /**
-     * This function can detect the name format automatically
-     * @global class $PARSECREATORS1 
-     * @param array $entry
-     * @param string $key
-     * @return string
-     * @since 6.0.0
-     * @access private
-     */
-    private static function dynamic_mode ($entry, $key) {
-        global $PARSECREATORS;
-        $creator = new PARSECREATORS1();
         $creatorArray = $creator->parse( $entry[$key] );
         // print_r($creatorArray);
         $string = '';

@@ -207,7 +207,7 @@ class tp_publication_interface {
     }
     
     public function get_journal () {
-        $this->data['row']['journal'];
+        return $this->data['row']['journal'];
     }
     
     public function get_institution () {
@@ -220,25 +220,6 @@ class tp_publication_interface {
     
     public function get_school () {
         return $this->data['row']['school'];
-    }
-    //return date us-style
-    public function get_date () {
-        return $this->data['row']['date'];
-        
-    }
-    //return date europ-style
-    public function get_date_europ () {
-        if ($this->data['row']['date'] != '' && $this->data['row']['date'] != '0000-00-00') {
-        $dateparts = explode("-", $this->data['row']['date']);
-        $day = $dateparts[2];
-        $month = $dateparts[1];
-        $year = $dateparts[0];
-        $date = $day . '.' . $month . '.' . $year;
-        }
-        else {
-            $date = '';
-        }
-        return $date;
     }
     
     public function get_editor ($before = '', $after = '') {
@@ -346,13 +327,7 @@ class tp_publication_interface {
      * @access public
      */
     public function get_year () {
-        if ($this->data['row']['year'] == '9999')
-        {
-            return 'In Press';
-        }
-        else {
-            return $this->data['row']['year'];
-        }
+        return $this->data['row']['year'];
     }
     
     /**

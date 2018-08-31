@@ -416,7 +416,7 @@ class tp_publications_page {
         echo '<th class="check-column"><input name="checkbox[]" class="tp_checkbox" type="checkbox" ' . $checked . ' value="' . $row->pub_id . '" /></th>';
         echo '<td>';
         echo '<a href="admin.php?page=teachpress/addpublications.php&amp;pub_id=' . $row->pub_id . $get_string . '" class="teachpress_link" title="' . __('Click to edit','teachpress') . '"><strong>' . tp_html::prepare_title($row->title, 'decode') . '</strong></a>';
-        echo '<div class="tp_row_actions"><a href="admin.php?page=teachpress/addpublications.php&amp;pub_id=' . $row->pub_id . $get_string . '" class="teachpress_link" title="' . __('Click to edit','teachpress') . '">' . __('Edit','teachpress') . '</a> | <a class="tp_row_delete" href="admin.php?page=' . $array_variables['page']  .'&amp;checkbox%5B%5D=' . $row->pub_id . '&amp;action=delete' . $get_string . '" title="' . __('Delete','teachpress') . '">' . __('Delete','teachpress') . '</a></div>';
+        echo '<div class="tp_row_actions"><a href="admin.php?page=teachpress/addpublications.php&amp;pub_id=' . $row->pub_id . $get_string . '" class="teachpress_link" title="' . __('Click to edit','teachpress') . '">' . __('Edit','teachpress') . '</a> | <a href="' . admin_url( 'admin-ajax.php' ) . '?action=teachpress&cite_id=' . $row->pub_id . '" class="teachpress_cite_pub teachpress_link">' . __('Cite', 'teachpress') . '</a> | <a class="tp_row_delete" href="admin.php?page=' . $array_variables['page']  .'&amp;checkbox%5B%5D=' . $row->pub_id . '&amp;action=delete' . $get_string . '" title="' . __('Delete','teachpress') . '">' . __('Delete','teachpress') . '</a></div>';
         echo '</td>';
         echo '<td>' . $row->pub_id . '</td>';
         echo '<td>' . tp_translate_pub_type($row->type) . '</td>';
@@ -665,9 +665,65 @@ class tp_publications_page {
         echo '</div></div>';
         
         // print_scripts
-        //tp_publications_page::print_scripts();
+        tp_publications_page::print_scripts();
         
         echo '</form>';
     } 
+    
+    /**
+     * Prints the js scripts
+     * @since 6.0.0
+     */
+    public static function print_scripts () {
+        ?>
+        <script type="text/javascript" charset="utf-8">
+            jQuery(document).ready(function($){
+                // Start cite publication window
+                $(".teachpress_cite_pub").each(function() {
+                    var $link = $(this);
+                    var $dialog = $('<div></div>')
+                        .load($link.attr('href') + ' #content')
+                        .dialog({
+                                autoOpen: false,
+                                title: '<?php _e('Cite publication','teachpress'); ?>',
+                                width: 600
+                        });
+                        
+                    $link.click(function() {
+                        $dialog.dialog('open');
+                        $('.tp_cite_full').focus();
+                        $('.tp_cite_full').select();
+                        return false;
+                    });
+                    
+                });
+                
+                // bibtex button in the cite publication window 
+                $(".tp_cite_bibtex").live('click',function() {
+                    var pub_id = $(this).attr("pub_id");
+                    $.get("<?php echo admin_url( 'admin-ajax.php' ) ;?>?action=teachpress&cite_pub=" + pub_id + "&cite_type=bibtex", 
+                    function(text){
+                        $("#tp_cite_full_" + pub_id).text(text);
+                        $("#tp_cite_full_" + pub_id).select();
+                        $("#tp_cite_bibtex_" + pub_id).addClass("nav-tab-active");
+                        $("#tp_cite_text_" + pub_id).removeClass("nav-tab-active");
+                    });
+                });
+                
+                // text button in the cite publication window 
+                $(".tp_cite_text").live('click',function() {
+                    var pub_id = $(this).attr("pub_id");
+                    $.get("<?php echo admin_url( 'admin-ajax.php' ) ;?>?action=teachpress&cite_pub=" + pub_id + "&cite_type=text", 
+                    function(text){
+                        $("#tp_cite_full_" + pub_id).text(text);
+                        $("#tp_cite_full_" + pub_id).select();
+                        $("#tp_cite_text_" + pub_id).addClass("nav-tab-active");
+                        $("#tp_cite_bibtex_" + pub_id).removeClass("nav-tab-active");
+                    });
+                });
+            });
+        </script>
+        <?php
+    }
     
 }

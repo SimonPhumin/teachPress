@@ -53,8 +53,18 @@ class tp_bibtex {
             }
             // year
             elseif ( $pub_fields[$i] === 'date' ) {
+                if ($row['year'] === '9999') {
+                $string .= 'year  = {Accepted},' . chr(13) . chr(10);
+                }
+                /*if ($row['date'] === '9999-00-00') {
+                $string .= 'date  = {Accepted},' . chr(13) . chr(10);
+                }*/
+                else {
                 $string .= 'year  = {' . $row['year'] . '},' . chr(13) . chr(10);
                 $string .= tp_bibtex::prepare_bibtex_line($row[$pub_fields[$i]],$pub_fields[$i]);
+                }
+                
+                
             }
             // techtype
             elseif ( $pub_fields[$i] === 'techtype' ) {

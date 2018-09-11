@@ -49,25 +49,15 @@ function tp_add_publication_page() {
     $data['editor'] = isset( $_POST['editor'] ) ? htmlspecialchars($_POST['editor']) : '';
     $data['isbn'] = isset( $_POST['isbn'] ) ? htmlspecialchars($_POST['isbn']) : '';
     $data['url'] = isset( $_POST['url'] ) ? htmlspecialchars($_POST['url']) : '';
-
-    if (isset( $_POST['date'] ) == '0000-00-00') {
-        $data['date'] = 'Accepted';
-    }
-    else {
-        $data['date'] = isset( $_POST['date'] ) ? htmlspecialchars($_POST['date']) : '';
-    }
-
-    //$data['date'] = isset( $_POST['date'] ) ? htmlspecialchars($_POST['date']) : '';
-
-
-    /*if (/*$data['status'] == 'published' && $data['date'] == '0000-00-00') {
-        $data['date'] == 'Accepted';
-    }*/
-
+    $data['date'] = isset( $_POST['date'] ) ? htmlspecialchars($_POST['date']) : '';
+    //Date
+    $data['date'] = isset( $_POST['date'] ) ? htmlspecialchars($_POST['date']) : '';
     //Forthcoming
     $data['status'] = isset( $_POST['forthcoming'] ) ? 'forthcoming' : 'published';
-
-
+    if ($data['status'] == 'forthcoming') {
+        $data['date'] = '9999-00-00';
+    }
+    
     $data['urldate'] = isset( $_POST['urldate'] ) ? htmlspecialchars($_POST['urldate']) : '';
     $data['booktitle'] = isset( $_POST['booktitle'] ) ? htmlspecialchars($_POST['booktitle']) : '';
     $data['issuetitle'] = isset( $_POST['issuetitle'] ) ? htmlspecialchars($_POST['issuetitle']) : '';

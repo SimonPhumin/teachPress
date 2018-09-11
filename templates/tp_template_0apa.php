@@ -90,7 +90,7 @@ class tp_template_0apa implements tp_publication_template
         $pub_content .= $interface->get_label($element ='status');
         $pub_content .= '<p class="tp_pub_author">' . $interface->get_author();
 
-        	if ($interface->get_year() == '0000' || $interface->get_year() == '9999'){
+        	if ($interface->get_year() == '9999'){
         		        $pub_content .= ' (Accepted).';}
     		else{
     			$pub_content .= ' (' . $interface->get_year() . ').';
@@ -285,7 +285,16 @@ class tp_template_0apa implements tp_publication_template
         $pub_content .= $interface->get_infocontainer();
         $pub_content .= '<div class="tp_apa" id="tp_apa_' . $interface->get_container_no() . '">';
         //open <p> paragraph
-        $pub_content .= '<p>' . $interface->get_author() . ' (' . $interface->get_year() . '). ';
+        $pub_content .= '<p>' . $interface->get_author();
+        //year
+        if ($interface->get_year() == '9999'){
+                        $pub_content .= ' (Accepted).';}
+            else{
+                $pub_content .= ' (' . $interface->get_year() . ').';
+            }
+
+        $pub_content .= '</p>';
+
         // Journal Article
         if ($interface->get_type2() == 'article') {
 

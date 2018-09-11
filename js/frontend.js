@@ -1,5 +1,8 @@
 // teachPress javascript for the frontend
 
+//Change 9999 in Year-Array to 'Accepted'
+document.getElementsByName('pub_year')[0].options[1].innerHTML = "Accepted";
+
 /**
  * for jumpmenu
  * @param {string} targ

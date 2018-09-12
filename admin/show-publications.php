@@ -429,7 +429,12 @@ class tp_publications_page {
         echo '<td>';
         echo tp_publications_page::get_tags_for_single_row($row->pub_id, $tags, $array_variables);
         echo '</td>';
-        echo '<td>' . $row->year . '</td>';
+        if ($row->year === '9999') {
+          echo '<td>Accepted</td>';
+        }
+        else {
+          echo '<td>' . $row->year . '</td>';
+        }
         echo '</tr>';
         
     }
@@ -678,6 +683,8 @@ class tp_publications_page {
         ?>
         <script type="text/javascript" charset="utf-8">
             jQuery(document).ready(function($){
+          //Change 9999 in Year-Array to 'Accepted'
+           $('select[name=year] option[value=9999]').html("Accepted");
                 // Start cite publication window
                 $(".teachpress_cite_pub").each(function() {
                     var $link = $(this);

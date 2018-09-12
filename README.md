@@ -1,7 +1,7 @@
 teachPress
 ==========
 
-This is the offical development repository of teachPress, a plugin for WordPress which unites a course management system (with modules for enrollments and assessments) and a BibTeX compatible publication management. teachPress is optimized for the needs of professorships and research groups. You can use it with WordPress 3.9.0 or higher.
+This is a forked development repository of teachPress, a plugin for WordPress which unites a course management system (with modules for enrollments and assessments) and a BibTeX compatible publication management. teachPress is optimized for the needs of professorships and research groups. You can use it with WordPress 3.9.0 or higher. This version adds support for APA-Style citation and export.
 
 For downloading offical teachPress versions, please use: https://wordpress.org/plugins/teachpress/
 
@@ -20,19 +20,13 @@ Documentation : https://github.com/winkm89/teachPress/wiki
 ## Supported Languages
 * English
 * German
-* Italian (o)
-* Portuguese (Brazil) (o)
-* Slovak (o)
-* Spanish (o)
-
-(o) Outdated language files
 
 ## Disclaimer 
 Use at your own risk. No warranty expressed or implied is provided.  
 
 ## Credits
 
-Copyright 2008-2018 by Michael Winkler
+Copyright 2008-2018 by Michael Winkler & Simon Phumin Schweikert
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

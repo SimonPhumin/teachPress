@@ -229,22 +229,6 @@ class tp_publication_interface {
         return $before . $this->data['all_editors']  . $after;
     }
 
-    /**
-     * Checks if the checkbox 'forthcoming' is set
-     */
-    public function get_accepted ($element = 'status', $values = array()) {
-        $data = ( isset ($this->data['row']['status']) ) ? $this->data['row']['status'] : '' ;
-        if ( $data === '' ) {
-            return '';
-        }
-
-        if ( in_array($data, $values) ) {
-            $title = ( $element === 'status' && $data === 'forthcoming' ) ? __('Accepted','teachpress') : $data;
-            // Replace possible chars from the meta data system
-            $title = str_replace(array('{','}'), array('',''), $title);
-            return '<h2 class="tp_pub_label_' . $element . ' ' . esc_attr($data) . '">Accepted</h2>';
-        }
-    }
 
     /**
      * Returns the tags hci style

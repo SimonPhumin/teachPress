@@ -254,7 +254,17 @@ class tp_publication_interface {
         return $tag_string;
     }
 
-
+ /**
+     * Returns the year
+     * @return string
+     * @since 6.0.0
+     * @access public
+     */
+    public function get_date () {
+        $gdate = explode("-", $this->data['row']['date']);
+        $ndate = $gdate[2] . '.' . $gdate[1] . '.' . $gdate[0];
+        return $ndate;
+    }
 
 
 

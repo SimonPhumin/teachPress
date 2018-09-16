@@ -135,7 +135,7 @@ class tp_template_0apa implements tp_publication_template
             }
 
             if ($interface->get_address() != "" && $interface->get_publisher() == "" && $interface->get_pages() == "") {
-                $pub_content .= $interface->get_address() . '.';
+                $pub_content .= $interface->get_address() . ': ' .$interface->get_date(). '.';
             } else {
                 $pub_content .= $interface->get_address();
             }
@@ -327,7 +327,7 @@ class tp_template_0apa implements tp_publication_template
                 }
             }
             if ($interface->get_address() != "" && $interface->get_publisher() == "" && $interface->get_pages() == "") {
-                $pub_content .= $interface->get_address() . '.';
+                $pub_content .= $interface->get_address() . ': ' .$interface->get_date(). '.';
             } else {
                 $pub_content .= $interface->get_address();
             }

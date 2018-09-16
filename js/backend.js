@@ -1,9 +1,5 @@
 // teachPress javascript for the admin menu
 
-year
-//Change 9999 in Year-Array to 'Accepted'
-document.getElementsByName('year')[0].options[1].innerHTML = "Accepted";
-
 /**
  * Delete node
  * @param {type} id
